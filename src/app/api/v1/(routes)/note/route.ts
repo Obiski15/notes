@@ -5,39 +5,26 @@ import catchAsync from "../../utils/helpers/catchAsync"
 import sendResponse from "../../utils/helpers/sendResponse"
 
 export const GET = catchAsync(async (request: NextRequest) => {
+  const filter: Record<string, string> = {}
   const noteStatus = request.nextUrl.searchParams.get("status")
+  const folderId = request.nextUrl.searchParams.get("folder")
 
-  const notes = await Note.find({ status: !noteStatus ? "active" : noteStatus })
+  if (folderId) {
+    filter["folder"] = folderId
+  }
+
+  const notes = await Note.find({
+    status: !noteStatus ? "active" : noteStatus,
+    ...filter,
+  }).populate("folder")
 
   return sendResponse({ status: "success", statusCode: 200, data: { notes } })
 })
 
-// export const POST = catchAsync(async (request: NextRequest) => {
-// const body = request.json()
-// validate the body parameter using zod
-// content string
-// title: string
-// folderId: mongoose.Schema.Types.ObjectId
-// const note = await Note.create()
+export const POST = catchAsync(async (request: NextRequest) => {
+  const body = await request.json()
 
-// return sendResponse({ status: "success", statusCode: 201 })
-// })
+  const note = await Note.create({ ...body })
 
-// export const PATCH = catchAsync(async (request: NextRequest) => {
-// const body = request.json
-// validate the body parameter using zod
-// id,
-// contents to be updated
-
-// const note = await Note.findByIdAndUpdate("hash", {}, { new: true })
-
-// return sendResponse({ status: "success", statusCode: 200 })
-// })
-
-// export const Delete = catchAsync(async (request: NextRequest) => {
-// const body = request.json
-// validate the body parameter using zod
-// id,
-
-// return sendResponse({ status: "success", statusCode: 200 })
-// })
+  return sendResponse({ status: "success", statusCode: 201, data: { note } })
+})

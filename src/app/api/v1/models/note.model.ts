@@ -9,14 +9,17 @@ const noteSchema = new mongoose.Schema<INoteDocument>(
       type: String,
       lowercase: true,
       trim: true,
+      required: [true, "Missing note title"],
     },
     folder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Folder,
+      required: [true, "Missing folderId"],
     },
     content: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       trim: true,
+      required: [true, "Missing content"],
     },
     status: {
       default: "active",

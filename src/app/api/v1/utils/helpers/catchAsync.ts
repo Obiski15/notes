@@ -6,12 +6,18 @@ import { IError } from "../../types"
 import errorHandler from "./errorHandler"
 
 const catchAsync = (
-  fn: (request: NextRequest) => Promise<NextResponse<unknown>>
+  fn: (
+    request: NextRequest,
+    context?: { params: Promise<unknown> }
+  ) => Promise<NextResponse<unknown>>
 ) => {
-  return async (request: NextRequest) => {
+  return async (
+    request: NextRequest,
+    context: { params: Promise<unknown> }
+  ) => {
     try {
       await db()
-      return await fn(request)
+      return await fn(request, context)
     } catch (error) {
       return errorHandler(error as IError)
     }

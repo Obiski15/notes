@@ -21,22 +21,3 @@ export const POST = catchAsync(async (request: NextRequest) => {
 
   return sendResponse({ status: "success", statusCode: 201, data: { folder } })
 })
-
-// export const PATCH = catchAsync(async (request: NextRequest) => {
-// const body = request.json()
-// id - from cookies || header
-
-// const note = await Folder.findByIdAndUpdate("hash", {name: ""}, { new: true })
-
-// return sendResponse({ status: "success", statusCode: 200 })
-// })
-
-// export const Delete = catchAsync(async (request: NextRequest) => {
-// const body = request.json()
-// validate the body parameter using zod
-// id,
-
-// await Folder.findByIdAndDelete("")
-
-// return sendResponse({ status: "success", statusCode: 200 })
-// })

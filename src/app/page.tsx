@@ -10,9 +10,7 @@ export default function Home() {
         <FolderContent />
       </div>
 
-      <div className="h-[calc(100vh-68px) no_scrollbar col-span-8 overflow-y-scroll border-2 p-10">
-        <Editor />
-      </div>
+      <Editor />
     </div>
   )
 }

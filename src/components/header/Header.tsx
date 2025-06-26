@@ -1,11 +1,18 @@
+"use client"
+
 import Image from "next/image"
 
+import { useNoteLocation } from "@/hooks/useNoteLocation"
+
 function Header() {
+  const { folder, status } = useNoteLocation()
   const image = ""
 
   return (
     <div className="flex items-center justify-between p-3">
-      <p>folder name</p>
+      <p className="text-[22px] font-semibold capitalize">
+        {folder.name || (!(status === "active") && status)}
+      </p>
 
       <div className="flex items-center justify-between gap-3">
         <p>Welcome, Emmanuel</p>

@@ -77,7 +77,6 @@ export const useLinkHandler = (props: LinkHandlerProps) => {
   const setLink = React.useCallback(() => {
     if (!url || !editor) return
 
-    // @ts-expect-error tip-tap link popover
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run()
 
     setUrl(null)
@@ -91,7 +90,6 @@ export const useLinkHandler = (props: LinkHandlerProps) => {
       .chain()
       .focus()
       .extendMarkRange("link")
-      // @ts-expect-error tip-tap link popover
       .unsetLink()
       .setMeta("preventAutolink", true)
       .run()
@@ -255,7 +253,6 @@ export function LinkPopover({
   const isDisabled = React.useMemo(() => {
     if (!editor) return true
     if (editor.isActive("codeBlock")) return true
-    // @ts-expect-error tip-tap link popover
     return !editor.can().setLink?.({ href: "" })
   }, [editor])
 

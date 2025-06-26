@@ -1,0 +1,5 @@
+@import "highlight.js/styles/github-dark.css";
+
+@media (prefers-color-scheme: dark) {
+  @import "highlight.js/styles/github.css";
+}

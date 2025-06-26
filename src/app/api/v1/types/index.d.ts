@@ -16,7 +16,7 @@ export interface IFolderDocument {
 export interface INoteDocument {
   _id: mongoose.Schema.Types.ObjectId
   folder: mongoose.Schema.Types.ObjectId
-  content: string
+  content: mongoose.Schema.Types.Mixed
   title: string
   status: "active" | "trash" | "archive" | "favorite"
   created_at: Date

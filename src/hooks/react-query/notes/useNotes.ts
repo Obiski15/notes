@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export const useNotes = ({
   folder = "",
-  status = "active",
+  status = "",
 }: {
   folder?: string
   status?: string

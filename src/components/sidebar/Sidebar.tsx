@@ -1,6 +1,8 @@
 import { Search } from "lucide-react"
 
+import CustomIcon from "../shared/CustomIcon"
 import Logo from "../shared/Logo"
+import CreateNote from "./CreateNote"
 import Folders from "./Folders"
 import More from "./More"
 import Recents from "./Recents"
@@ -10,8 +12,10 @@ function Sidebar() {
     <div className="no_scrollbar col-span-3 h-screen space-y-[30px] overflow-y-scroll py-[30px]">
       <div className="flex items-center justify-between px-5">
         <Logo />
-        <Search className="size-5 text-foreground/40" />
+        <CustomIcon Icon={Search} className="text-foreground/40" />
       </div>
+
+      <CreateNote />
 
       <div className="space-y-[30px]">
         <Recents />

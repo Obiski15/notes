@@ -14,12 +14,18 @@ const noteSchema = new mongoose.Schema<INoteDocument>(
     folder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Folder,
-      required: [true, "Missing folderId"],
     },
     content: {
       type: mongoose.Schema.Types.Mixed,
       trim: true,
-      required: [true, "Missing content"],
+      default: {
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+          },
+        ],
+      },
     },
     status: {
       default: "active",

@@ -11,7 +11,7 @@ function Header() {
   return (
     <div className="flex items-center justify-between p-3">
       <p className="text-[22px] font-semibold capitalize">
-        {folder.name || (!(status === "active") && status)}
+        {folder.name || (!(status === "active") ? status : "All Notes")}
       </p>
 
       <div className="flex items-center justify-between gap-3">

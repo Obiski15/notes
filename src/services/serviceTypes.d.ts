@@ -48,3 +48,12 @@ export interface INotes extends IResponse {
     notes: Note[]
   }
 }
+
+export interface ICreateNote {
+  title: string
+  folder?: string
+}
+
+export interface IUpdateNote extends Partial<Omit<Note, "folder">> {
+  folder?: string
+}

@@ -6,17 +6,30 @@ import sendResponse from "../../utils/helpers/sendResponse"
 
 export const GET = catchAsync(async (request: NextRequest) => {
   const filter: Record<string, string> = {}
-  const noteStatus = request.nextUrl.searchParams.get("status")
-  const folderId = request.nextUrl.searchParams.get("folder")
+  const { searchParams } = request.nextUrl
+
+  const noteStatus = searchParams.get("status")
+  const folderId = searchParams.get("folder")
 
   if (folderId) {
     filter["folder"] = folderId
   }
 
-  const notes = await Note.find({
-    status: !noteStatus ? "active" : noteStatus,
+  const query = {
     ...filter,
-  }).populate("folder")
+    ...(!noteStatus
+      ? {
+          $or: [{ status: "active" }, { status: "favorites" }],
+        }
+      : { status: noteStatus }),
+  }
+
+  const notes = await Note.find(query)
+    .populate("folder")
+    .sort([
+      ["updatedAt", "desc"],
+      ["title", "desc"],
+    ])
 
   return sendResponse({ status: "success", statusCode: 200, data: { notes } })
 })

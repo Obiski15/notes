@@ -1,11 +1,13 @@
 "use client"
 
-import { Folder, FolderOpen, FolderPlus } from "lucide-react"
+import { Folder, FolderOpen } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useFolders } from "@/hooks/react-query/folder/useFolders"
 import { useNoteLocation } from "@/hooks/useNoteLocation"
 
+import CustomIcon from "../shared/CustomIcon"
+import CreateFolder from "./CreateFolder"
 import Heading from "./heading"
 import Loader from "./Loader"
 
@@ -19,7 +21,9 @@ function Folders() {
 
   return (
     <div className="space-y-2">
-      <Heading Icon={FolderPlus}>folders</Heading>
+      <Heading heading="folders">
+        <CreateFolder />
+      </Heading>
 
       {data?.data.folders!.map(({ _id, name }, index) => (
         <button
@@ -32,11 +36,7 @@ function Folders() {
             _id === folder._id ? "bg-[#FFFFFF08]" : "bg-transparent"
           )}
         >
-          {_id === folder._id ? (
-            <FolderOpen className="size-5 text-foreground" />
-          ) : (
-            <Folder className="size-5 text-foreground" />
-          )}
+          <CustomIcon Icon={_id === folder._id ? FolderOpen : Folder} />
 
           <p className="font-semibold capitalize text-foreground/60">{name}</p>
         </button>

@@ -6,7 +6,7 @@ import { Image } from "@tiptap/extension-image"
 import Placeholder from "@tiptap/extension-placeholder"
 import { TextAlign } from "@tiptap/extension-text-align"
 import Underline from "@tiptap/extension-underline"
-import { Content, EditorContent, EditorContext, useEditor } from "@tiptap/react"
+import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { all, createLowlight } from "lowlight"
 import { toast } from "sonner"
@@ -29,11 +29,24 @@ import "@/components/tiptap-node/image-upload-node/image-upload-node.scss"
 import "@/components/tiptap-node/paragraph-node/paragraph-node.scss"
 import "@/components/tiptap-ui/code-block/code-block-theme.css"
 
+import { useEffect } from "react"
+import { useSearchParams } from "next/navigation"
+
+import { cn, toastTrash } from "@/lib/utils"
+import { useNote } from "@/hooks/react-query/notes/useNote"
+import { useUpdateNote } from "@/hooks/react-query/notes/useUpdateNote"
+
 import { Button } from "../ui/button"
 
 const lowlight = createLowlight(all)
 
-function TextEditor({ content }: { content: Content }) {
+function TextEditor({ folder }: { folder?: string }) {
+  const searchParams = useSearchParams()
+  const note = searchParams.get("note") || ""
+
+  const { data } = useNote({ noteId: note })
+  const { update, isUpdating } = useUpdateNote(note)
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -61,17 +74,29 @@ function TextEditor({ content }: { content: Content }) {
         },
       }),
     ],
-    content,
+    content: data?.data.note.content ?? null,
     autofocus: true,
     shouldRerenderOnTransaction: false,
+    editable: !isUpdating && !(data?.data.note.status === "trash"),
     immediatelyRender: false,
+  })
+
+  useEffect(() => {
+    if (data?.data.note.status === "trash") {
+      toastTrash()
+    }
   })
 
   if (!editor) return null
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <div className="flex items-center justify-start gap-[30px] border-b border-t border-foreground/10 py-2.5">
+      <div
+        className={cn(
+          "flex items-center justify-start gap-[30px] border-foreground/10 py-2.5",
+          !(data?.data.note.status === "trash") && "border-b border-t"
+        )}
+      >
         <div className="tiptap-button-group" data-orientation="horizontal">
           <HeadingDropdownMenu levels={[1, 2, 3, 4]} />
           <MarkButton type="bold" />
@@ -95,14 +120,30 @@ function TextEditor({ content }: { content: Content }) {
       </div>
 
       <EditorContent editor={editor} role="presentation" />
-      <Button
-        onClick={() => {
-          console.log(editor.getJSON())
-          console.log(typeof editor.getJSON())
-        }}
-      >
-        Save
-      </Button>
+      {!(data?.data.note.status === "trash") && (
+        <Button
+          disabled={isUpdating}
+          onClick={() => {
+            update(
+              {
+                title: data!.data.note.title,
+                content: editor.getJSON(),
+                folder,
+              },
+              {
+                onSuccess: () => {
+                  toast.info("Note updated")
+                },
+                onError: () => {
+                  toast.error("Something went wrong!")
+                },
+              }
+            )
+          }}
+        >
+          Save
+        </Button>
+      )}
     </EditorContext.Provider>
   )
 }

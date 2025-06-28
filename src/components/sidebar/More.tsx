@@ -6,6 +6,7 @@ import { Archive, LucideProps, Star, Trash } from "lucide-react"
 
 import { useNoteLocation } from "@/hooks/useNoteLocation"
 
+import CustomIcon from "../shared/CustomIcon"
 import Heading from "./heading"
 
 const content: {
@@ -25,7 +26,7 @@ function More() {
 
   return (
     <div className="space-y-2">
-      <Heading>more</Heading>
+      <Heading heading="more" />
       {content.map((value, index) => (
         <button
           key={index}
@@ -35,7 +36,7 @@ function More() {
           }}
           className="flex w-full items-center justify-start gap-[15px] px-5 py-2.5"
         >
-          <value.Icon className="size-5 text-foreground" />
+          <CustomIcon Icon={value.Icon} />
           <p className="font-semibold capitalize text-foreground/60">
             {value.name}
           </p>

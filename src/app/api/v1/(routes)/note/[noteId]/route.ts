@@ -21,7 +21,12 @@ export const PATCH = catchAsync(
   async (request: NextRequest, context?: { params: Promise<unknown> }) => {
     const body = await request.json()
     const { noteId } = (await context?.params) as { noteId: string }
-    const note = await Note.findByIdAndUpdate(noteId, { ...body })
+
+    const note = await Note.findByIdAndUpdate(
+      noteId,
+      { ...body },
+      { new: true }
+    )
 
     return sendResponse({ status: "success", statusCode: 200, data: { note } })
   }

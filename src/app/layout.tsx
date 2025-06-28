@@ -11,6 +11,7 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import NoteLocationProvider from "@/providers/note-location-provider"
 import ReactQueryProvider from "@/providers/ReactQueryProvider"
+import RecentNotesProvider from "@/providers/recent-notes-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 const sourceSans = Source_Sans_3({
@@ -39,14 +40,16 @@ export default function RootLayout({
         >
           <ReactQueryProvider>
             <NoteLocationProvider>
-              <div className="grid h-screen grid-cols-12 gap-5 overflow-hidden">
-                <Sidebar />
-                <div className="col-span-9 h-full">
-                  <Header />
-                  {children}
+              <RecentNotesProvider>
+                <div className="grid h-screen grid-cols-12 gap-5 overflow-hidden">
+                  <Sidebar />
+                  <div className="col-span-9 h-full">
+                    <Header />
+                    {children}
+                  </div>
                 </div>
-              </div>
-              <Toaster position="top-center" />
+                <Toaster position="top-center" />
+              </RecentNotesProvider>
             </NoteLocationProvider>
           </ReactQueryProvider>
         </ThemeProvider>

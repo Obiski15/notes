@@ -1,21 +1,18 @@
-import { ForwardRefExoticComponent, RefAttributes } from "react"
-import { LucideProps } from "lucide-react"
+import { ReactNode } from "react"
 
 function Heading({
   children,
-  Icon,
+  heading,
 }: {
-  children: string
-  Icon?: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >
+  children?: ReactNode
+  heading: string
 }) {
   return (
     <div className="flex items-center justify-between px-5">
       <h3 className="text-sm font-semibold capitalize text-foreground/60">
-        {children}
+        {heading}
       </h3>
-      {Icon && <Icon className="size-5 text-foreground/40" />}
+      {children}
     </div>
   )
 }

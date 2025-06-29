@@ -8,6 +8,8 @@ import * as z from "zod"
 
 import schema from "@/schema/create-folder-schema"
 
+import useCreateFolder from "@/hooks/react-query/folder/useCreateFolder"
+
 import CustomIcon from "../shared/CustomIcon"
 import { Button } from "../ui/button"
 import {
@@ -28,9 +30,10 @@ function CreateFolder() {
     resolver: zodResolver(schema),
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
+  const { createFolder, isCreatingFolder } = useCreateFolder()
 
-  const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
-    console.log(values)
+  const _onSubmit: SubmitHandler<z.infer<typeof schema>> = async values => {
+    createFolder(values)
   }
 
   return (
@@ -72,6 +75,7 @@ function CreateFolder() {
               <Button
                 type="submit"
                 onClick={() => submitButton.current?.click()}
+                disabled={isCreatingFolder}
               >
                 Create
               </Button>

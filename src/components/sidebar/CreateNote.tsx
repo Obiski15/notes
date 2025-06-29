@@ -45,9 +45,6 @@ function CreateNote() {
   const { createNote, isCreatingNote } = useCreateNote()
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      title: "Obiski new note",
-    },
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
 

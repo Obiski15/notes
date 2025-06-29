@@ -12,7 +12,7 @@ export const GET = catchAsync(async () => {
 })
 
 export const POST = catchAsync(async (request: NextRequest) => {
-  const name = (await request.json()).name
+  const name = (await request.json()).folder
   if (!name) {
     throw new AppError("Missing folder name", 401)
   }

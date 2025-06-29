@@ -33,7 +33,7 @@ export interface IFolders extends IResponse {
 }
 
 export interface ICreateFolder {
-  name: string
+  folder: string
 }
 
 export type INoteStatus = "active" | "archive" | "favorites" | "trash"

@@ -10,6 +10,7 @@ import { useRecentNotes } from "@/hooks/useRecentNotes"
 
 import ErrorState from "../shared/Error"
 import Info from "../shared/Info"
+import { Badge } from "../ui/badge"
 import EmptyTrash from "./EmptyTrash"
 import Loader from "./Loader"
 import NoteIcon from "./NoteIcon"
@@ -61,7 +62,7 @@ function Notes() {
         <div
           key={note._id}
           className={cn(
-            "w-full cursor-pointer space-y-2.5 p-5 text-left",
+            "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left hover:scale-105",
             noteId === note._id ? "bg-foreground/10" : "bg-[#FFFFFF08]"
           )}
           onClick={() => {
@@ -70,14 +71,23 @@ function Notes() {
           }}
         >
           <div className="flex items-center justify-between gap-2">
-            <h3 className="flex-1 break-all text-lg font-semibold leading-7">
+            <h3 className="flex-1 break-all text-lg font-semibold capitalize leading-7">
               {note.title}
             </h3>
             <NoteIcon note={note} />
           </div>
-          <div className="flex items-center justify-start gap-2.5">
-            <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
-            {/* <p className="line-clamp-1 text-foreground/60">{note.content}</p> */}
+
+          <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
+          <div className="flex flex-wrap items-start justify-start gap-2">
+            {note.tags.map((tag, index) => (
+              <Badge
+                key={`tag-${tag}-${index}}`}
+                variant="outline"
+                className="capitalize"
+              >
+                {tag}
+              </Badge>
+            ))}
           </div>
         </div>
       ))}

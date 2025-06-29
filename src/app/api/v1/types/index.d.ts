@@ -18,6 +18,7 @@ export interface INoteDocument {
   folder: mongoose.Schema.Types.ObjectId
   content: mongoose.Schema.Types.Mixed
   title: string
+  tags: string[]
   status: "active" | "trash" | "archive" | "favorite"
   created_at: Date
   updated_at: Date

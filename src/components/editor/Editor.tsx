@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
-import { CalendarDays, Folder, Info as InfoIcon } from "lucide-react"
+import { Folder, History, Info as InfoIcon, Tag } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
 import { useFolders } from "@/hooks/react-query/folder/useFolders"
@@ -64,7 +64,7 @@ function Editor() {
       ) : (
         <div className="space-y-[30px]">
           <div className="flex items-center justify-between">
-            <h1 className="break-all text-[32px] font-semibold">
+            <h1 className="break-all text-[32px] font-semibold capitalize">
               {data?.data.note?.title}
             </h1>
             <NoteActions />
@@ -72,15 +72,22 @@ function Editor() {
 
           <>
             <div className="text-sm font-medium capitalize">
-              <div className="flex w-full items-center justify-start gap-2 border-b border-b-foreground/10 pb-[15px]">
-                <CustomIcon
-                  Icon={CalendarDays}
-                  className="text-foreground/60"
-                />
-                <p className="min-w-[100px] text-foreground/60">Date</p>
-                <p className="underline">
-                  {formatDate(data!.data.note.updateAt)}
-                </p>
+              <div className="space-y-[15px] border-b border-b-foreground/10 pb-[15px]">
+                <div className="flex w-full items-center justify-start gap-2">
+                  <CustomIcon Icon={History} className="text-foreground/60" />
+                  <p className="min-w-[100px] text-foreground/60">
+                    Last edited
+                  </p>
+                  <p className="underline">
+                    {formatDate(data!.data.note.updateAt)}
+                  </p>
+                </div>
+
+                <div className="flex w-full items-center justify-start gap-2">
+                  <CustomIcon Icon={Tag} className="text-foreground/60" />
+                  <p className="min-w-[100px] text-foreground/60">Tags</p>
+                  <p>{data!.data.note.tags.join(", ")}</p>
+                </div>
               </div>
 
               <div className="flex items-center justify-start gap-2 pt-[15px]">
@@ -93,7 +100,7 @@ function Editor() {
                   <Select value={folder} onValueChange={val => setFolder(val)}>
                     <SelectTrigger
                       id="folder"
-                      className="size-fit w-full border-none p-0 capitalize underline focus:ring-0 [&>svg]:hidden"
+                      className="size-fit border-none p-0 capitalize underline focus:ring-0 [&>svg]:hidden"
                       disabled={data.data.note.status === "trash"}
                     >
                       <SelectValue placeholder="Select a folder" />

@@ -15,6 +15,14 @@ const noteSchema = new mongoose.Schema<INoteDocument>(
       type: mongoose.Schema.Types.ObjectId,
       ref: Folder,
     },
+    tags: [
+      {
+        type: String,
+        lowercase: true,
+        trim: true,
+        default: [],
+      },
+    ],
     content: {
       type: mongoose.Schema.Types.Mixed,
       trim: true,

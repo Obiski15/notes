@@ -52,8 +52,9 @@ function CreateNote() {
   const submitButton = useRef<HTMLButtonElement | null>(null)
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
-    console.log(values)
-    createNote(values, {
+    const data = { ...values, tags: values.tags?.split(",") }
+
+    createNote(data, {
       onSuccess: () => toast.info(`${values.title} created`),
       onError: e => toast.error(e.message),
       onSettled: () => form.reset({ title: "", folder: "" }),
@@ -87,49 +88,66 @@ function CreateNote() {
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">
-              <div className="grid gap-3">
-                <FormField
-                  name="title"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="title" className="w-fit"></FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter note title" {...field} />
-                      </FormControl>
-                      <FormMessage>{fieldState.error?.message}</FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="grid gap-3">
-                <FormField
-                  name="folder"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="folder" className="w-fit">
-                        Folder
-                      </FormLabel>
+              <FormField
+                name="title"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel htmlFor="title" className="w-fit">
+                      Title
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter note title" {...field} />
+                    </FormControl>
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="tags"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel htmlFor="title" className="w-fit">
+                      Tags
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Add tags separated by commas"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
+                  </FormItem>
+                )}
+              />
 
-                      <FormControl>
-                        <Select onValueChange={field.onChange} {...field}>
-                          <SelectTrigger id="folder" className="w-full">
-                            <SelectValue placeholder="Select a folder" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {folders.data?.data.folders?.map(folder => (
-                              <SelectItem key={folder._id} value={folder._id}>
-                                {folder.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                name="folder"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel htmlFor="folder" className="w-fit">
+                      Folder
+                    </FormLabel>
+
+                    <FormControl>
+                      <Select onValueChange={field.onChange} {...field}>
+                        <SelectTrigger id="folder" className="w-full">
+                          <SelectValue placeholder="Select a folder" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {folders.data?.data.folders?.map(folder => (
+                            <SelectItem key={folder._id} value={folder._id}>
+                              {folder.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
             <DialogFooter>
               <DialogClose asChild>

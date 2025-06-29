@@ -1,14 +1,41 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
+import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
 import { cn, formatDate, toastTrash } from "@/lib/utils"
 import { useNotes } from "@/hooks/react-query/notes/useNotes"
 import { useNoteLocation } from "@/hooks/useNoteLocation"
 import { useRecentNotes } from "@/hooks/useRecentNotes"
 
+import ErrorState from "../shared/Error"
+import Info from "../shared/Info"
 import EmptyTrash from "./EmptyTrash"
+import Loader from "./Loader"
 import NoteIcon from "./NoteIcon"
+
+const emptyState = {
+  active: {
+    title: "No notes yet",
+    message: "You haven't created any notes. Start writing your first one!",
+    Icon: Clipboard,
+  },
+  archive: {
+    title: "No archived notes",
+    message: "You haven't archived any notes yet.",
+    Icon: Archive,
+  },
+  favorites: {
+    title: "No favorites yet",
+    message: "Mark notes as favorites to find them here easily.",
+    Icon: Star,
+  },
+  trash: {
+    title: "Trash is empty",
+    message: "Deleted notes will appear here before being permanently removed.",
+    Icon: Trash,
+  },
+}
 
 function Notes() {
   const { folder, status } = useNoteLocation()
@@ -19,11 +46,11 @@ function Notes() {
   })
   const { setRecentNotes } = useRecentNotes()
 
-  if (isLoading) return <div>loading</div>
+  if (isLoading) return <Loader />
 
-  if (error) return <div>Something went wrong</div>
+  if (error) return <ErrorState />
 
-  if (!data?.data.notes.length) return <div>Nothing to display</div>
+  if (!data?.data.notes.length) return <Info {...emptyState[status]} />
 
   return (
     <div className="space-y-5 px-5 py-[30px]">

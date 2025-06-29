@@ -2,6 +2,7 @@ import { Search } from "lucide-react"
 
 import CustomIcon from "../shared/CustomIcon"
 import Logo from "../shared/Logo"
+import AllNotes from "./all-notes"
 import CreateNote from "./CreateNote"
 import Folders from "./Folders"
 import More from "./More"
@@ -14,6 +15,8 @@ function Sidebar() {
         <Logo />
         <CustomIcon Icon={Search} className="text-foreground/40" />
       </div>
+
+      <AllNotes />
 
       <CreateNote />
 

@@ -10,5 +10,5 @@ interface Props extends LucideProps {
 }
 
 export default function CustomIcon({ Icon, className }: Props) {
-  return <Icon className={cn("size-5", className)} />
+  return <Icon className={cn("size-5 flex-shrink-0", className)} />
 }

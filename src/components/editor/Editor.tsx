@@ -1,14 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
-import { CalendarDays, Folder } from "lucide-react"
+import { CalendarDays, Folder, Info as InfoIcon } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
 import { useFolders } from "@/hooks/react-query/folder/useFolders"
 import { useNote } from "@/hooks/react-query/notes/useNote"
 
 import CustomIcon from "../shared/CustomIcon"
+import ErrorState from "../shared/Error"
+import Info from "../shared/Info"
 import {
   Select,
   SelectContent,
@@ -16,13 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
-import NoSelectedNote from "./no-selected-note"
+import Loader from "./Loader"
 import NoteActions from "./NoteActions"
 import TextEditor from "./TextEditor"
 
 function Editor() {
   const noteId = useSearchParams().get("note") || ""
-  const { isLoading, error, data } = useNote({ noteId })
+  const { isLoading, error, data, refetch } = useNote({ noteId })
   const { data: folders, isLoading: isLoadingFolders } = useFolders()
 
   const [folder, setFolder] = useState<string | undefined>("")
@@ -34,13 +37,30 @@ function Editor() {
   return (
     <div className="h-[calc(100vh-68px) no_scrollbar col-span-8 overflow-y-scroll p-10">
       {!noteId ? (
-        <NoSelectedNote />
+        <Info
+          title="Select a note to view"
+          message="Choose a note from the list on the left to view its contents, or
+          create a new note to add to your collection."
+        >
+          <Image
+            src="/icons/note.svg"
+            alt="note"
+            width={80}
+            height={80}
+            className="mx-auto"
+          />
+        </Info>
       ) : isLoading ? (
-        <p>Loading</p>
+        <Loader />
       ) : error ? (
-        <p>Something went wrong</p>
+        <ErrorState onRetry={refetch} />
       ) : !data?.data.note ? (
-        <p>Invalid Note Id || Note not found </p>
+        <Info
+          Icon={InfoIcon}
+          title="Note not found"
+          message="The note you are looking for does not exist or may have been
+            removed."
+        />
       ) : (
         <div className="space-y-[30px]">
           <div className="flex items-center justify-between">

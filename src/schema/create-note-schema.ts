@@ -6,10 +6,17 @@ const schema = zod.object({
     .min(3, "Note title must be at least 3 characters long")
     .toLowerCase()
     .trim(),
+  tags: zod
+    .string()
+    .min(3, "Note title must be at least 3 characters long")
+    .toLowerCase()
+    .trim()
+    .optional(),
   folder: zod
     .string()
     .min(3, "Folder name must be at least 3 characters long")
     .toLowerCase()
+    .trim()
     .optional(),
 })
 

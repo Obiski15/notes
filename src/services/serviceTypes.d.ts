@@ -8,6 +8,7 @@ interface Note {
   status: INoteStatus
   title: string
   content: unknown
+  tags: string[]
   updateAt: Date
   folder: {
     _id: string
@@ -51,6 +52,7 @@ export interface INotes extends IResponse {
 
 export interface ICreateNote {
   title: string
+  tags?: string[]
   folder?: string
 }
 

@@ -4,33 +4,25 @@ import { useSearchParams } from "next/navigation"
 import { FileText } from "lucide-react"
 
 import { cn } from "@/lib/tiptap-utils"
-import { useNoteLocation } from "@/hooks/useNoteLocation"
 import { useRecentNotes } from "@/hooks/useRecentNotes"
 
 import CustomIcon from "../shared/CustomIcon"
+import EmptyState from "./empty-state"
 import Heading from "./heading"
 
 function Recents() {
   const { recentNotes, setRecentNotes } = useRecentNotes()
-  const { setFolder, setStatus } = useNoteLocation()
   const noteId = useSearchParams().get("note")
 
   return (
     <div className="space-y-2">
-      <Heading heading="recents">
-        <button
-          className="cursor-pointer text-sm font-semibold text-foreground hover:underline"
-          onClick={() => {
-            setStatus("active")
-            setFolder({ name: "", _id: "" })
-          }}
-        >
-          all notes
-        </button>
-      </Heading>
+      <Heading heading="recents" />
 
       {!recentNotes.length ? (
-        <div className="px-5">No recent notes </div>
+        <EmptyState
+          title="Nothing recent"
+          message="Your recent notes will appear here."
+        />
       ) : (
         recentNotes.map(({ title, _id }, index) => (
           <button
@@ -44,7 +36,7 @@ function Recents() {
             )}
           >
             <CustomIcon Icon={FileText} />
-            <p className="font-semibold capitalize text-foreground/60">
+            <p className="line-clamp-1 font-semibold capitalize text-foreground/60">
               {title}
             </p>
           </button>

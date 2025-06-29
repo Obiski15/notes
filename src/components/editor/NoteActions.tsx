@@ -54,7 +54,7 @@ function NoteActions() {
         </button>
 
         <div>
-          <div className="pb-5">
+          <div className="border-b border-b-[#FFFFFF0D] pb-5">
             <button
               disabled={isUpdating}
               onClick={() =>
@@ -63,7 +63,7 @@ function NoteActions() {
                   status: "archive",
                 })
               }
-              className="flex w-full items-center justify-start gap-[15px] border-b border-b-[#FFFFFF0D]"
+              className="flex w-full items-center justify-start gap-[15px]"
             >
               <CustomIcon Icon={Archive} />
               <p>Archive</p>

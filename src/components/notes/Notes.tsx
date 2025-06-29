@@ -77,7 +77,6 @@ function Notes() {
             <NoteIcon note={note} />
           </div>
 
-          <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
           <div className="flex flex-wrap items-start justify-start gap-2">
             {note.tags.map((tag, index) => (
               <Badge
@@ -89,6 +88,7 @@ function Notes() {
               </Badge>
             ))}
           </div>
+          <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
         </div>
       ))}
     </div>

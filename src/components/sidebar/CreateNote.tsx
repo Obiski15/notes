@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useIsFetching } from "@tanstack/react-query"
 import { Plus } from "lucide-react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -43,6 +44,7 @@ import {
 function CreateNote() {
   const folders = useFolders()
   const { createNote, isCreatingNote } = useCreateNote()
+  const isFetchingNotes = useIsFetching({ queryKey: ["notes"] })
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   })
@@ -70,6 +72,7 @@ function CreateNote() {
                 className="w-full"
                 Icon={Plus}
                 IconPosition="left"
+                disabled={!!isFetchingNotes}
               >
                 New note
               </Button>

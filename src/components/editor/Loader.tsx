@@ -3,7 +3,7 @@ import { Skeleton } from "../ui/skeleton"
 function Loader() {
   return (
     <div className="space-y-7">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between gap-2">
         <Skeleton className="h-10 w-full max-w-[457px]" />
         <Skeleton className="size-10 flex-shrink-0 rounded-full" />
       </div>
@@ -33,7 +33,7 @@ function Loader() {
           <Skeleton className="size-5 rounded-sm" />
         </div>
 
-        <div className="flex items-center justify-start gap-2">
+        <div className="flex items-center justify-start gap-2 max-lg:hidden">
           <Skeleton className="size-5 rounded-sm" />
           <Skeleton className="size-5 rounded-sm" />
           <Skeleton className="size-5 rounded-sm" />

@@ -31,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sourceSans.variable} antialiased`}>
+      <body
+        className={`${sourceSans.variable} mx-auto min-w-[250px] max-w-[1440px] overflow-hidden antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -42,8 +44,11 @@ export default function RootLayout({
             <NoteLocationProvider>
               <RecentNotesProvider>
                 <div className="grid h-screen grid-cols-12 gap-5 overflow-hidden">
-                  <Sidebar />
-                  <div className="col-span-9 h-full">
+                  <div className="max-lg:hidden lg:col-span-3">
+                    <Sidebar />
+                  </div>
+
+                  <div className="col-span-12 h-full lg:col-span-9">
                     <Header />
                     {children}
                   </div>

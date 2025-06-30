@@ -31,7 +31,7 @@ function Recents() {
               setRecentNotes({ title, _id })
             }}
             className={cn(
-              `flex w-full items-center justify-start gap-[15px] px-5 py-2.5`,
+              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5`,
               _id === noteId ? "bg-primary" : "bg-transparent"
             )}
           >

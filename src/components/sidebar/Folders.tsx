@@ -40,7 +40,7 @@ function Folders() {
               setFolder({ _id, name })
             }}
             className={cn(
-              `flex w-full items-center justify-start gap-[15px] px-5 py-2.5`,
+              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5`,
               _id === folder._id ? "bg-[#FFFFFF08]" : "bg-transparent"
             )}
           >

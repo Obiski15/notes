@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
 import { Plus } from "lucide-react"
@@ -12,8 +13,9 @@ import schema from "@/schema/create-note-schema"
 
 import { useFolders } from "@/hooks/react-query/folder/useFolders"
 import { useCreateNote } from "@/hooks/react-query/notes/useCreateNote"
+import { useRecentNotes } from "@/hooks/useRecentNotes"
 
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import {
   Dialog,
   DialogClose,
@@ -23,7 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog"
+} from "../../ui/dialog"
 import {
   Form,
   FormControl,
@@ -31,32 +33,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
+} from "../../ui/form"
+import { Input } from "../../ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../../ui/select"
+import CustomIcon from "../CustomIcon"
 
 function CreateNote() {
   const folders = useFolders()
+
   const { createNote, isCreatingNote } = useCreateNote()
   const isFetchingNotes = useIsFetching({ queryKey: ["notes"] })
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
+  const cancelButton = useRef<HTMLButtonElement | null>(null)
+  const { setRecentNotes } = useRecentNotes()
+
+  const router = useRouter()
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
     const data = { ...values, tags: values.tags?.split(",") }
 
     createNote(data, {
-      onSuccess: () => toast.info(`${values.title} created`),
+      onSuccess: data => {
+        toast.info(`${values.title} created`)
+        form.reset({ title: "", folder: "" })
+        cancelButton.current?.click()
+        setRecentNotes({ title: data.data.note.title, _id: data.data.note._id })
+        router.push(`/?note=${data.data.note._id}`)
+      },
       onError: e => toast.error(e.message),
-      onSettled: () => form.reset({ title: "", folder: "" }),
     })
   }
 
@@ -65,8 +78,8 @@ function CreateNote() {
       <form onSubmit={form.handleSubmit(_onSubmit)}>
         <button ref={submitButton} hidden></button>
         <Form {...form}>
-          <div className="px-5">
-            <DialogTrigger asChild>
+          <div className="bottom-5 right-5 max-lg:absolute lg:px-5">
+            <DialogTrigger asChild className="max-lg:hidden">
               <Button
                 variant="secondary"
                 className="w-full"
@@ -75,6 +88,15 @@ function CreateNote() {
                 disabled={!!isFetchingNotes}
               >
                 New note
+              </Button>
+            </DialogTrigger>
+
+            <DialogTrigger asChild className="lg:hidden">
+              <Button
+                className="size-10 rounded-full"
+                disabled={!!isFetchingNotes}
+              >
+                <CustomIcon Icon={Plus} className="text-foreground" />
               </Button>
             </DialogTrigger>
           </div>
@@ -149,9 +171,11 @@ function CreateNote() {
                 )}
               />
             </div>
-            <DialogFooter>
+            <DialogFooter className="[&_button]:w-full">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button ref={cancelButton} variant="outline">
+                  Cancel
+                </Button>
               </DialogClose>
               <Button
                 type="submit"

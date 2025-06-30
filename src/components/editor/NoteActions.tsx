@@ -38,7 +38,7 @@ function NoteActions() {
         <CustomIcon Icon={CircleEllipsis} />
       </PopoverTrigger>
 
-      <PopoverContent className="w-full max-w-[200px] space-y-5 border-none bg-secondary p-[15px]">
+      <PopoverContent className="w-full max-w-[200px] space-y-5 border-none bg-secondary p-3.5">
         <button
           disabled={isUpdating}
           onClick={() =>
@@ -47,7 +47,7 @@ function NoteActions() {
               status: "favorites",
             })
           }
-          className="flex w-full items-center justify-start gap-[15px]"
+          className="flex w-full items-center justify-start gap-3.5"
         >
           <CustomIcon Icon={Star} />
           <p>Add to favorites</p>
@@ -63,7 +63,7 @@ function NoteActions() {
                   status: "archive",
                 })
               }
-              className="flex w-full items-center justify-start gap-[15px]"
+              className="flex w-full items-center justify-start gap-3.5"
             >
               <CustomIcon Icon={Archive} />
               <p>Archive</p>
@@ -78,7 +78,7 @@ function NoteActions() {
                   status: "trash",
                 })
               }
-              className="flex w-full items-center justify-start gap-[15px]"
+              className="flex w-full items-center justify-start gap-3.5"
             >
               <CustomIcon Icon={Trash} />
               <p>Move to trash</p>

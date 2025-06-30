@@ -35,7 +35,7 @@ function Editor() {
   }, [data])
 
   return (
-    <div className="h-[calc(100vh-68px) no_scrollbar col-span-8 overflow-y-scroll p-10">
+    <div className="h-full px-5 py-10 lg:p-10">
       {!noteId ? (
         <Info
           title="Select a note to view"
@@ -62,9 +62,9 @@ function Editor() {
             removed."
         />
       ) : (
-        <div className="space-y-[30px]">
-          <div className="flex items-center justify-between">
-            <h1 className="break-all text-[32px] font-semibold capitalize">
+        <div className="space-y-7">
+          <div className="flex items-center justify-between gap-2">
+            <h1 className="break-all text-2xl font-semibold capitalize lg:text-[32px]">
               {data?.data.note?.title}
             </h1>
             <NoteActions />
@@ -72,10 +72,10 @@ function Editor() {
 
           <>
             <div className="text-sm font-medium capitalize">
-              <div className="space-y-[15px] border-b border-b-foreground/10 pb-[15px]">
+              <div className="space-y-3.5 border-b border-b-foreground/10 pb-3.5">
                 <div className="flex w-full items-center justify-start gap-2">
                   <CustomIcon Icon={History} className="text-foreground/60" />
-                  <p className="min-w-[100px] text-foreground/60">
+                  <p className="min-w-20 text-foreground/60 lg:min-w-24">
                     Last edited
                   </p>
                   <p className="underline">
@@ -85,14 +85,18 @@ function Editor() {
 
                 <div className="flex w-full items-center justify-start gap-2">
                   <CustomIcon Icon={Tag} className="text-foreground/60" />
-                  <p className="min-w-[100px] text-foreground/60">Tags</p>
+                  <p className="min-w-20 text-foreground/60 lg:min-w-24">
+                    Tags
+                  </p>
                   <p>{data!.data.note.tags.join(", ")}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-start gap-2 pt-[15px]">
+              <div className="flex items-center justify-start gap-2 pt-3.5">
                 <CustomIcon Icon={Folder} className="text-foreground/60" />
-                <p className="min-w-[100px] text-foreground/60">Folder</p>
+                <p className="min-w-20 text-foreground/60 lg:min-w-24">
+                  Folder
+                </p>
 
                 {isLoadingFolders ? (
                   <p>Loading folders...</p>

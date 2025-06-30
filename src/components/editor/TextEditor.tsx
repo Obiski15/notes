@@ -31,14 +31,43 @@ import "@/components/tiptap-ui/code-block/code-block-theme.css"
 
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
+import { Ellipsis } from "lucide-react"
 
 import { cn, toastTrash } from "@/lib/utils"
 import { useNote } from "@/hooks/react-query/notes/useNote"
 import { useUpdateNote } from "@/hooks/react-query/notes/useUpdateNote"
 
+import CustomIcon from "../shared/CustomIcon"
 import { Button } from "../ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 
 const lowlight = createLowlight(all)
+
+function MarkButtonsGroup() {
+  return (
+    <div className="flex items-center justify-start gap-3.5 max-lg:flex-wrap lg:gap-7">
+      <div
+        className="tiptap-button-group max-lg:flex-wrap"
+        data-orientation="horizontal"
+      >
+        <ImageUploadButton />
+        <LinkPopover />
+        <TextAlignButton align="left" />
+        <TextAlignButton align="center" />
+        <TextAlignButton align="right" />
+        <TextAlignButton align="justify" />
+      </div>
+      <div
+        className="tiptap-button-group max-lg:flex-wrap"
+        data-orientation="horizontal"
+      >
+        <CodeBlockButton />
+        <UndoRedoButton action="undo" />
+        <UndoRedoButton action="redo" />
+      </div>
+    </div>
+  )
+}
 
 function TextEditor({ folder }: { folder?: string }) {
   const searchParams = useSearchParams()
@@ -93,8 +122,9 @@ function TextEditor({ folder }: { folder?: string }) {
     <EditorContext.Provider value={{ editor }}>
       <div
         className={cn(
-          "flex items-center justify-start gap-[30px] border-foreground/10 py-2.5",
-          !(data?.data.note.status === "trash") && "border-b border-t"
+          "flex items-center justify-start gap-3.5 py-2.5 lg:gap-7",
+          !(data?.data.note.status === "trash") &&
+            "border-b border-t border-foreground/10"
         )}
       >
         <div className="tiptap-button-group" data-orientation="horizontal">
@@ -104,18 +134,23 @@ function TextEditor({ folder }: { folder?: string }) {
           <MarkButton type="underline" />
           <ColorHighlightPopover />
         </div>
-        <div className="tiptap-button-group" data-orientation="horizontal">
-          <ImageUploadButton />
-          <LinkPopover />
-          <TextAlignButton align="left" />
-          <TextAlignButton align="center" />
-          <TextAlignButton align="right" />
-          <TextAlignButton align="justify" />
+
+        <div className="max-lg:hidden">
+          <MarkButtonsGroup />
         </div>
-        <div className="tiptap-button-group" data-orientation="horizontal">
-          <CodeBlockButton />
-          <UndoRedoButton action="undo" />
-          <UndoRedoButton action="redo" />
+
+        <div className="lg:hidden">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost">
+                <CustomIcon Icon={Ellipsis} className="size-fit" />
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-40 border-none">
+              <MarkButtonsGroup />
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 

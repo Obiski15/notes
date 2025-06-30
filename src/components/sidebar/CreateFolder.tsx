@@ -30,10 +30,18 @@ function CreateFolder() {
     resolver: zodResolver(schema),
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
+  const cancelButton = useRef<HTMLButtonElement | null>(null)
   const { createFolder, isCreatingFolder } = useCreateFolder()
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = async values => {
-    createFolder(values)
+    createFolder(values, {
+      onSuccess: () => {
+        form.reset({
+          folder: "",
+        })
+        cancelButton.current?.click()
+      },
+    })
   }
 
   return (
@@ -68,9 +76,11 @@ function CreateFolder() {
               )}
             />
 
-            <DialogFooter>
+            <DialogFooter className="[&_button]:w-full">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" ref={cancelButton}>
+                  Cancel
+                </Button>
               </DialogClose>
               <Button
                 type="submit"

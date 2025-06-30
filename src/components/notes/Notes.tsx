@@ -1,16 +1,29 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
 import { cn, formatDate, toastTrash } from "@/lib/utils"
 import { useNotes } from "@/hooks/react-query/notes/useNotes"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { useNoteLocation } from "@/hooks/useNoteLocation"
 import { useRecentNotes } from "@/hooks/useRecentNotes"
 
+import Editor from "../editor/Editor"
 import ErrorState from "../shared/Error"
 import Info from "../shared/Info"
+import CreateNote from "../shared/notes/CreateNote"
+import SearchNote from "../shared/notes/SearchNote"
 import { Badge } from "../ui/badge"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet"
 import EmptyTrash from "./EmptyTrash"
 import Loader from "./Loader"
 import NoteIcon from "./NoteIcon"
@@ -39,6 +52,7 @@ const emptyState = {
 }
 
 function Notes() {
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
   const { folder, status } = useNoteLocation()
   const noteId = useSearchParams().get("note") || ""
   const { data, isLoading, error } = useNotes({
@@ -46,6 +60,13 @@ function Notes() {
     status,
   })
   const { setRecentNotes } = useRecentNotes()
+  const editorSheetRef = useRef<null | HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (noteId) {
+      if (!isDesktop) editorSheetRef.current?.click()
+    }
+  }, [noteId])
 
   if (isLoading) return <Loader />
 
@@ -54,10 +75,15 @@ function Notes() {
   if (!data?.data.notes.length) return <Info {...emptyState[status]} />
 
   return (
-    <div className="space-y-5 px-5 py-[30px]">
+    <div className="h-full space-y-5 px-5 py-7">
       {status === "trash" && !!data?.data.notes.length && (
         <EmptyTrash notes={data.data.notes.map(note => note._id)} />
       )}
+
+      <div className="lg:hidden">
+        <SearchNote />
+      </div>
+
       {data?.data.notes.map(note => (
         <div
           key={note._id}
@@ -68,6 +94,9 @@ function Notes() {
           onClick={() => {
             if (status === "trash") return toastTrash()
             setRecentNotes({ title: note!.title, _id: note!._id })
+            if (noteId === note._id) {
+              if (!isDesktop) editorSheetRef.current?.click()
+            }
           }}
         >
           <div className="flex items-center justify-between gap-2">
@@ -91,6 +120,26 @@ function Notes() {
           <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
         </div>
       ))}
+
+      {!isDesktop && (
+        <>
+          <Sheet>
+            <SheetTrigger ref={editorSheetRef} hidden></SheetTrigger>
+            <SheetHeader className="hidden">
+              <SheetTitle>Sidebar header</SheetTitle>
+              <SheetDescription>Sidebar description</SheetDescription>
+            </SheetHeader>
+
+            <SheetContent
+              className="w-full overflow-y-scroll border-none p-0"
+              side="right"
+            >
+              <Editor />
+            </SheetContent>
+          </Sheet>
+          <CreateNote />
+        </>
+      )}
     </div>
   )
 }

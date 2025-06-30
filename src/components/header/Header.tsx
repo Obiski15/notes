@@ -1,25 +1,64 @@
 "use client"
 
-import Image from "next/image"
+import { Menu } from "lucide-react"
 
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { useNoteLocation } from "@/hooks/useNoteLocation"
+
+import CustomIcon from "../shared/CustomIcon"
+import Logo from "../shared/Logo"
+import SearchNote from "../shared/notes/SearchNote"
+import Sidebar from "../sidebar/Sidebar"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet"
+import Settings from "../user/Settings"
+
+function MobileSidebar() {
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
+
+  return (
+    !isDesktop && (
+      <Sheet>
+        <SheetTrigger>
+          <CustomIcon Icon={Menu} />
+        </SheetTrigger>
+        <SheetHeader className="hidden">
+          <SheetTitle>Sidebar header</SheetTitle>
+          <SheetDescription>Sidebar description</SheetDescription>
+        </SheetHeader>
+
+        <SheetContent className="border-none p-0 [&>button]:hidden">
+          <Sidebar />
+        </SheetContent>
+      </Sheet>
+    )
+  )
+}
 
 function Header() {
   const { folder, status } = useNoteLocation()
-  const image = ""
 
   return (
-    <div className="flex items-center justify-between p-3">
-      <p className="text-[22px] font-semibold capitalize">
+    <div className="flex items-center justify-between p-6 lg:p-3">
+      <div className="lg:hidden">
+        <Logo />
+      </div>
+
+      <p className="text-[22px] font-semibold capitalize max-lg:hidden">
         {folder.name || (!(status === "active") ? status : "All Notes")}
       </p>
 
-      <div className="flex items-center justify-between gap-3">
-        <p>Welcome, Emmanuel</p>
-        <div className="relative flex size-10 items-center justify-center rounded-full bg-red-500 uppercase">
-          {!image ? <p>AB</p> : <Image src="" alt="profile" fill />}
-        </div>
+      <div className="flex items-center justify-between gap-3 max-lg:hidden">
+        <SearchNote />
+        <Settings />
       </div>
+      <MobileSidebar />
     </div>
   )
 }

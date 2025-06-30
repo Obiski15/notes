@@ -1,26 +1,25 @@
-import { Search } from "lucide-react"
-
-import CustomIcon from "../shared/CustomIcon"
 import Logo from "../shared/Logo"
+import CreateNote from "../shared/notes/CreateNote"
 import AllNotes from "./all-notes"
-import CreateNote from "./CreateNote"
+import CompWrapper from "./CompWrapper"
 import Folders from "./Folders"
 import More from "./More"
 import Recents from "./Recents"
 
 function Sidebar() {
   return (
-    <div className="no_scrollbar col-span-3 h-screen space-y-[30px] overflow-y-scroll py-[30px]">
-      <div className="flex items-center justify-between px-5">
+    <div className="no_scrollbar h-screen space-y-7 overflow-y-scroll py-7">
+      <CompWrapper className="max-lg:hidden">
         <Logo />
-        <CustomIcon Icon={Search} className="text-foreground/40" />
-      </div>
+      </CompWrapper>
 
       <AllNotes />
 
-      <CreateNote />
+      <div className="max-lg:hidden">
+        <CreateNote />
+      </div>
 
-      <div className="space-y-[30px]">
+      <div className="space-y-7">
         <Recents />
         <Folders />
         <More />

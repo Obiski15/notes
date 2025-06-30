@@ -34,7 +34,7 @@ function More() {
             setStatus(value.status)
             setFolder({ name: "", _id: "" })
           }}
-          className="flex w-full items-center justify-start gap-[15px] px-5 py-2.5"
+          className="flex w-full items-center justify-start gap-3.5 px-5 py-2.5"
         >
           <CustomIcon Icon={value.Icon} />
           <p className="font-semibold capitalize text-foreground/60">

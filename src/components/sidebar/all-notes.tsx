@@ -7,12 +7,13 @@ import { useNoteLocation } from "@/hooks/useNoteLocation"
 
 import CustomIcon from "../shared/CustomIcon"
 import { Button } from "../ui/button"
+import CompWrapper from "./CompWrapper"
 
 function AllNotes() {
   const { setFolder, setStatus, status } = useNoteLocation()
 
   return (
-    <div className="px-5">
+    <CompWrapper>
       <Button
         variant="secondary"
         className={cn(
@@ -33,7 +34,7 @@ function AllNotes() {
 
         <CustomIcon Icon={ChevronRight} />
       </Button>
-    </div>
+    </CompWrapper>
   )
 }
 

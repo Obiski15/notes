@@ -1,3 +1,6 @@
+export interface IResponse {
+  status: "success" | "error" | "fail"
+}
 interface Folder {
   _id: string
   name: string
@@ -14,10 +17,6 @@ interface Note {
     _id: string
     name: string
   }
-}
-
-export interface IResponse {
-  status: "success" | "error" | "fail"
 }
 
 export interface IFolder extends IResponse {
@@ -58,4 +57,20 @@ export interface ICreateNote {
 
 export interface IUpdateNote extends Partial<Omit<Note, "folder">> {
   folder?: string
+}
+
+export interface IAuth extends IResponse {
+  data: {
+    _id: string
+    email: string
+  }
+}
+
+export interface ILogin {
+  email: string
+  password: string
+}
+
+export interface IRegister extends ILogin {
+  confirm_password: string
 }

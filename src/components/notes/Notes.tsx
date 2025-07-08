@@ -66,7 +66,7 @@ function Notes() {
     if (noteId) {
       if (!isDesktop) editorSheetRef.current?.click()
     }
-  }, [noteId])
+  }, [noteId, isDesktop])
 
   if (isLoading) return <Loader />
 

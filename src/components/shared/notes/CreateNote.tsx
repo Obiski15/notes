@@ -96,7 +96,7 @@ function CreateNote() {
                 className="size-10 rounded-full"
                 disabled={!!isFetchingNotes}
               >
-                <CustomIcon Icon={Plus} className="text-foreground" />
+                <CustomIcon Icon={Plus} />
               </Button>
             </DialogTrigger>
           </div>

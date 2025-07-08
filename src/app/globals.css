@@ -69,7 +69,7 @@
 
     --primary: 241 59% 44%; /* --primary: 0 0% 98%; */
 
-    --primary-foreground: 0 0% 9%;
+    --primary-foreground: 0 0% 100%; /* --primary-foreground: 0 0% 9%; */
 
     --secondary: 0 0% 20%; /* --secondary: 0 0% 14.9%; */
 

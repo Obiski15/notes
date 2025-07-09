@@ -6,13 +6,23 @@ export abstract class IdbService {
   protected dbName: string
   protected storeName: string
   protected version: number
-  protected db: Promise<IDBPDatabase<unknown>>
+  protected db: Promise<IDBPDatabase<unknown>> | undefined = undefined
 
   constructor(dbName: string, storeName: string) {
     this.dbName = dbName
     this.storeName = storeName
     this.version = 1
-    this.db = this.idbInit(this.storeName, this.version)()
+    if (typeof window !== "undefined" && "indexedDB" in window) {
+      this.db = this.idbInit(this.storeName, this.version)()
+    }
+  }
+
+  protected async getDb(): Promise<IDBPDatabase<unknown>> {
+    if (!this.db) {
+      throw new Error("IndexedDB is not supported in this environment.")
+    }
+
+    return this.db
   }
 
   private idbInit = (storeName: string, version: number) => {

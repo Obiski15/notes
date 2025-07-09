@@ -1,5 +1,6 @@
 "use client"
 
+import { Ref } from "react"
 import { Menu } from "lucide-react"
 
 import { useMediaQuery } from "@/hooks/useMediaQuery"
@@ -41,11 +42,11 @@ function MobileSidebar() {
   )
 }
 
-function Header() {
+function Header({ ref }: { ref?: Ref<HTMLDivElement> }) {
   const { folder, status } = useNoteLocation()
 
   return (
-    <div className="flex items-center justify-between p-6 lg:p-3">
+    <div ref={ref} className="flex items-center justify-between p-6 lg:p-3">
       <div className="lg:hidden">
         <Logo />
       </div>

@@ -92,11 +92,7 @@ function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button
-          className="w-full"
-          disabled={isLoading}
-          onClick={() => console.log("something")}
-        >
+        <Button className="w-full" disabled={isLoading}>
           Create new account
         </Button>
         <Footer

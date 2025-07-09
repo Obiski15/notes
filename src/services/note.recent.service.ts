@@ -17,13 +17,13 @@ export class RecentNoteService extends IdbService {
   }
 
   async getNotes(id: string): Promise<INotes> {
-    const notes = await (await this.db).get(this.storeName, id)
+    const notes = await (await this.getDb()).get(this.storeName, id)
 
     return notes ?? { notes: [] }
   }
 
   async addNote(data: INote) {
-    const db = await this.db
+    const db = await this.getDb()
 
     const notes = await this.getNotes(data.id)
 

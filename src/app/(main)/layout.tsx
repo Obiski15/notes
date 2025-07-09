@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 
-import Header from "@/components/header/Header"
 import Sidebar from "@/components/sidebar/Sidebar"
 
 import "../../styles/_keyframe-animations.scss"
@@ -27,10 +26,10 @@ export default function RootLayout({
             <Sidebar />
           </div>
 
-          <div className="col-span-12 h-full lg:col-span-9">
-            <Header />
-            {children}
-          </div>
+          {/* <div className="col-span-12 h-full lg:col-span-9">
+            <Header /> */}
+          {children}
+          {/* </div> */}
         </div>
       </NoteLocationProvider>
     </Protected>

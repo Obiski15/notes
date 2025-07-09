@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef } from "react"
-import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
 import { Plus } from "lucide-react"
@@ -13,7 +12,8 @@ import schema from "@/schema/create-note-schema"
 
 import { useFolders } from "@/hooks/react-query/folder/useFolders"
 import { useCreateNote } from "@/hooks/react-query/notes/useCreateNote"
-import { useRecentNotes } from "@/hooks/useRecentNotes"
+import { useUpdateRecentNotes } from "@/hooks/react-query/notes/useUpdateRecentNotes"
+import { useUser } from "@/hooks/react-query/user/useUser"
 
 import { Button } from "../../ui/button"
 import {
@@ -54,9 +54,8 @@ function CreateNote() {
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
   const cancelButton = useRef<HTMLButtonElement | null>(null)
-  const { setRecentNotes } = useRecentNotes()
-
-  const router = useRouter()
+  const { addRecentNote } = useUpdateRecentNotes()
+  const { user } = useUser()
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
     const data = { ...values, tags: values.tags?.split(",") }
@@ -66,8 +65,12 @@ function CreateNote() {
         toast.info(`${values.title} created`)
         form.reset({ title: "", folder: "" })
         cancelButton.current?.click()
-        setRecentNotes({ title: data.data.note.title, _id: data.data.note._id })
-        router.push(`/?note=${data.data.note._id}`)
+
+        // update recent note
+        addRecentNote({
+          id: String(user?.data.user._id),
+          note: { title: data.data.note.title, _id: data.data.note._id },
+        })
       },
       onError: error =>
         toast.error(
@@ -150,7 +153,7 @@ function CreateNote() {
               <FormField
                 name="folder"
                 control={form.control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem className="grid gap-3">
                     <FormLabel htmlFor="folder" className="w-fit">
                       Folder
@@ -170,6 +173,7 @@ function CreateNote() {
                         </SelectContent>
                       </Select>
                     </FormControl>
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
                   </FormItem>
                 )}
               />

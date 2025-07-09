@@ -1,0 +1,48 @@
+import { IdbService } from "./idb.service"
+import { IRecentNote, IRecentNotes } from "./serviceTypes"
+
+export interface INotes {
+  id: string
+  notes: IRecentNotes
+}
+
+export interface INote {
+  id: string
+  note: IRecentNote
+}
+
+export class RecentNoteService extends IdbService {
+  constructor() {
+    super("notes", "recentNotes")
+  }
+
+  async getNotes(id: string): Promise<INotes> {
+    const notes = await (await this.db).get(this.storeName, id)
+
+    return notes ?? { notes: [] }
+  }
+
+  async addNote(data: INote) {
+    const db = await this.db
+
+    const notes = await this.getNotes(data.id)
+
+    if (!!notes.notes.length) {
+      // filter out note to avoid duplicates
+      const updated = notes.notes.filter(n => n._id !== data.note._id)
+
+      // extract note from data and update notes
+      const newNotes = [
+        data.note,
+        ...updated.slice(0, updated.length >= 3 ? -1 : updated.length),
+      ]
+
+      // replace note in db
+      db.put(this.storeName, { id: data.id, notes: newNotes })
+    } else {
+      db.add(this.storeName, { id: data.id, notes: [data.note] })
+    }
+
+    return data.note._id
+  }
+}

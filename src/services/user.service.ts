@@ -1,4 +1,5 @@
 import BaseService from "./base.service"
+import { IUser } from "./serviceTypes"
 
 export default class UserService extends BaseService {
   constructor() {
@@ -6,6 +7,6 @@ export default class UserService extends BaseService {
   }
 
   async getUser() {
-    return this.get("/user")
+    return this.get<IUser>("/user")
   }
 }

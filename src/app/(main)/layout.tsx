@@ -8,7 +8,6 @@ import "../../styles/_variables.scss"
 
 import Protected from "@/components/auth/Protected"
 import NoteLocationProvider from "@/providers/note-location-provider"
-import RecentNotesProvider from "@/providers/recent-notes-provider"
 
 export const metadata: Metadata = {
   title: "Notes",
@@ -23,18 +22,16 @@ export default function RootLayout({
   return (
     <Protected>
       <NoteLocationProvider>
-        <RecentNotesProvider>
-          <div className="grid h-screen grid-cols-12 gap-5 overflow-hidden">
-            <div className="max-lg:hidden lg:col-span-3">
-              <Sidebar />
-            </div>
-
-            <div className="col-span-12 h-full lg:col-span-9">
-              <Header />
-              {children}
-            </div>
+        <div className="grid h-screen grid-cols-12 gap-5 overflow-hidden">
+          <div className="max-lg:hidden lg:col-span-3">
+            <Sidebar />
           </div>
-        </RecentNotesProvider>
+
+          <div className="col-span-12 h-full lg:col-span-9">
+            <Header />
+            {children}
+          </div>
+        </div>
       </NoteLocationProvider>
     </Protected>
   )

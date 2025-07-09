@@ -6,9 +6,10 @@ import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
 import { cn, formatDate, toastTrash } from "@/lib/utils"
 import { useNotes } from "@/hooks/react-query/notes/useNotes"
+import { useUpdateRecentNotes } from "@/hooks/react-query/notes/useUpdateRecentNotes"
+import { useUser } from "@/hooks/react-query/user/useUser"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { useNoteLocation } from "@/hooks/useNoteLocation"
-import { useRecentNotes } from "@/hooks/useRecentNotes"
 
 import Editor from "../editor/Editor"
 import ErrorState from "../shared/Error"
@@ -52,6 +53,7 @@ const emptyState = {
 }
 
 function Notes() {
+  const editorSheetRef = useRef<null | HTMLButtonElement>(null)
   const isDesktop = useMediaQuery("(min-width: 1024px)")
   const { folder, status } = useNoteLocation()
   const noteId = useSearchParams().get("note") || ""
@@ -59,8 +61,8 @@ function Notes() {
     folder: folder._id,
     status,
   })
-  const { setRecentNotes } = useRecentNotes()
-  const editorSheetRef = useRef<null | HTMLButtonElement>(null)
+  const { user } = useUser()
+  const { addRecentNote } = useUpdateRecentNotes()
 
   useEffect(() => {
     if (noteId) {
@@ -91,9 +93,12 @@ function Notes() {
             "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left hover:scale-105",
             noteId === note._id ? "bg-foreground/10" : "bg-[#FFFFFF08]"
           )}
-          onClick={() => {
+          onClick={async () => {
             if (status === "trash") return toastTrash()
-            setRecentNotes({ title: note!.title, _id: note!._id })
+            addRecentNote({
+              id: String(user?.data.user._id),
+              note: { title: String(note.title), _id: String(note._id) },
+            })
             if (noteId === note._id) {
               if (!isDesktop) editorSheetRef.current?.click()
             }

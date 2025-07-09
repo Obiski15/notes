@@ -69,7 +69,10 @@ function CreateNote() {
         setRecentNotes({ title: data.data.note.title, _id: data.data.note._id })
         router.push(`/?note=${data.data.note._id}`)
       },
-      onError: e => toast.error(e.message),
+      onError: error =>
+        toast.error(
+          (error as unknown as { error: { message: string } }).error.message
+        ),
     })
   }
 

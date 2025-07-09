@@ -20,7 +20,10 @@ const useCreateFolder = () => {
       })
       toast.info("Folder created successfully")
     },
-    onError: () => toast.error("Something went wrong. Please try again!"),
+    onError: error =>
+      toast.error(
+        (error as unknown as { error: { message: string } }).error.message
+      ),
   })
 
   return { isCreatingFolder, createFolder, error }

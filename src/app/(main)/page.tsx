@@ -1,5 +1,11 @@
+import { Metadata } from "next"
+
 import Editor from "@/components/editor/Editor"
 import Notes from "@/components/notes/Notes"
+
+export const metadata: Metadata = {
+  title: "Home",
+}
 
 export default function Home() {
   return (

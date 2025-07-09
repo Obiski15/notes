@@ -1,14 +1,17 @@
 "use client"
 
 import { ReactNode, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { useUser } from "@/hooks/react-query/user/useUser"
+
+import FullPageLoader from "../shared/full-page-loader"
 
 function Protected({ children }: { children: ReactNode }) {
   const { user: userData, isLoading, error } = useUser()
   const [user, setUser] = useState<unknown>(null)
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     setUser(userData)
@@ -21,14 +24,14 @@ function Protected({ children }: { children: ReactNode }) {
           "4"
         )
       ) {
-        router.push("/login")
+        router.push(`/login?redirect=${pathname}`)
       } else {
-        router.push("/something")
+        throw new Error()
       }
     }
-  }, [error, router])
+  }, [error, router, pathname])
 
-  if (isLoading) return <div>loading</div>
+  if (isLoading) return <FullPageLoader />
 
   if (!isLoading && user) return children
 }

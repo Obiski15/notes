@@ -169,9 +169,11 @@ function TextEditor({ folder }: { folder?: string }) {
                 onSuccess: () => {
                   toast.info("Note updated")
                 },
-                onError: () => {
-                  toast.error("Something went wrong!")
-                },
+                onError: error =>
+                  toast.error(
+                    (error as unknown as { error: { message: string } }).error
+                      .message
+                  ),
               }
             )
           }}

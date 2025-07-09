@@ -18,8 +18,10 @@ function NoteIcon({ note }: { note: INote["data"]["note"] }) {
       { status: "active" },
       {
         onSuccess: () => toast.info(`${title} removed from ${status}`),
-        onError: () =>
-          toast.error("Unable to perform action. Please try again"),
+        onError: error =>
+          toast.error(
+            (error as unknown as { error: { message: string } }).error.message
+          ),
       }
     )
   }

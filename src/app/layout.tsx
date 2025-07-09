@@ -13,7 +13,10 @@ const sourceSans = Source_Sans_3({
 })
 
 export const metadata: Metadata = {
-  title: "Notes",
+  title: {
+    default: "Notes",
+    template: "Notes | %s",
+  },
   description: "AI powered notes taking app",
 }
 

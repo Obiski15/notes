@@ -1,11 +1,9 @@
-import { useRouter } from "next/navigation"
 import AuthService from "@/services/auth.service"
 import { ILogin } from "@/services/serviceTypes"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 export const useLogin = () => {
-  const router = useRouter()
   const {
     mutate: login,
     isPending: isLoading,
@@ -16,9 +14,11 @@ export const useLogin = () => {
     onSuccess: () => {
       toast.success("Login successful")
       toast.info("Redirecting...")
-      router.push("/")
     },
-    onError: error => toast.error(error.message),
+    onError: error =>
+      toast.error(
+        (error as unknown as { error: { message: string } }).error.message
+      ),
   })
 
   return { login, isLoading, error }

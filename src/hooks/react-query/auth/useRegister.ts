@@ -19,7 +19,10 @@ export const useRegister = () => {
       toast.info("Redirecting...")
       router.push("/")
     },
-    onError: error => toast.error(error.message),
+    onError: error =>
+      toast.error(
+        (error as unknown as { error: { message: string } }).error.message
+      ),
   })
 
   return { register, isLoading, error }

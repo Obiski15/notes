@@ -26,7 +26,10 @@ function EmptyTrash({ notes }: { notes: string[] }) {
       })
       toast.success("Trash emptied")
     },
-    onError: () => toast.error("Something went wrong. Please try again!"),
+    onError: error =>
+      toast.error(
+        (error as unknown as { error: { message: string } }).error.message
+      ),
   })
 
   return (

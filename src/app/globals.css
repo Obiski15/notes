@@ -124,7 +124,20 @@
 }
 
 @layer utilities {
+  @keyframes logo {
+    from {
+      transform: scale(0.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
   .no_scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  .logo_animate {
+    animation: logo 1s ease-in-out infinite alternate-reverse;
   }
 }

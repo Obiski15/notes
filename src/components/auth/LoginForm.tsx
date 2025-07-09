@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as z from "zod"
@@ -21,10 +22,11 @@ import {
 import { Input } from "../ui/input"
 import Footer from "./Footer"
 
-function LoginForm() {
+function LoginForm({ redirect }: { redirect?: string }) {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
   })
+  const router = useRouter()
   const { login, isLoading } = useLogin()
 
   const _onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = values => {
@@ -34,6 +36,7 @@ function LoginForm() {
           email: "",
           password: "",
         })
+        router.push(redirect ? redirect : "/")
       },
     })
   }

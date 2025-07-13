@@ -38,9 +38,9 @@ export class RecentNoteService extends IdbService {
       ]
 
       // replace note in db
-      db.put(this.storeName, { id: data.id, notes: newNotes })
+      await db.put(this.storeName, { id: data.id, notes: newNotes })
     } else {
-      db.add(this.storeName, { id: data.id, notes: [data.note] })
+      await db.add(this.storeName, { id: data.id, notes: [data.note] })
     }
 
     return data.note._id

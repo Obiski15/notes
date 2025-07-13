@@ -8,6 +8,8 @@ import "../../styles/_variables.scss"
 import Protected from "@/components/auth/Protected"
 import NoteLocationProvider from "@/providers/note-location-provider"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Notes",
   description: "AI powered notes taking app",

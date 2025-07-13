@@ -1,7 +1,7 @@
 import { Kaushan_Script } from "next/font/google"
 import Image from "next/image"
 
-export const KaushaScript = Kaushan_Script({
+const KaushaScript = Kaushan_Script({
   variable: "--font-kaushan-script",
   subsets: ["latin"],
   weight: ["400"],

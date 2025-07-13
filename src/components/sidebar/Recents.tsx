@@ -39,7 +39,7 @@ function Recents() {
               })
             }}
             className={cn(
-              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5`,
+              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5 transition-all`,
               _id === noteId ? "bg-primary" : "bg-transparent"
             )}
           >

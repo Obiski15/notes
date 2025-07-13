@@ -1,4 +1,4 @@
-import { INote, INoteStatus } from "@/services/serviceTypes"
+import { IError, INote, INoteStatus } from "@/services/serviceTypes"
 import { ArchiveRestore, History, Star } from "lucide-react"
 import { toast } from "sonner"
 
@@ -19,9 +19,7 @@ function NoteIcon({ note }: { note: INote["data"]["note"] }) {
       {
         onSuccess: () => toast.info(`${title} removed from ${status}`),
         onError: error =>
-          toast.error(
-            (error as unknown as { error: { message: string } }).error.message
-          ),
+          toast.error((error as unknown as IError).error.message),
       }
     )
   }

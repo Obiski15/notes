@@ -52,8 +52,6 @@ function handleDevError(error: IError) {
   const status = error.status ?? "error"
   const statusCode = error.statusCode ?? 500
 
-  console.log(error)
-
   return sendResponse({
     status,
     statusCode,
@@ -81,6 +79,8 @@ function handleProdError(error: IError) {
 
 const errorHandler = (error: IError, request: NextRequest) => {
   let err = { ...error, name: error.name, message: error.message } as IError
+
+  console.error(error)
 
   if (error.code === "ERR_JWT_EXPIRED") err = handleExpiredJwt()
 

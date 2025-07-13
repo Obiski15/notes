@@ -1,6 +1,12 @@
 export interface IResponse {
   status: "success" | "error" | "fail"
 }
+export interface IError {
+  error: {
+    message: string
+    status: number
+  }
+}
 interface Folder {
   _id: string
   name: string
@@ -19,6 +25,7 @@ interface Note {
   }
 }
 
+// folders
 export interface IFolder extends IResponse {
   data: {
     folder: Folder
@@ -35,6 +42,7 @@ export interface ICreateFolder {
   folder: string
 }
 
+// notes
 export type INoteStatus = "active" | "archive" | "favorites" | "trash"
 
 export interface INote extends IResponse {
@@ -72,6 +80,7 @@ export interface IUser extends IResponse {
   }
 }
 
+// auth
 export interface IAuth extends IResponse {
   data: {
     _id: string
@@ -79,8 +88,17 @@ export interface IAuth extends IResponse {
   }
 }
 
-export interface ILogin {
+export interface IForgotPassword {
   email: string
+}
+
+export interface IResetPassword {
+  resetToken: string
+  password: string
+  confirm_password: string
+}
+
+export interface ILogin extends IForgotPassword {
   password: string
 }
 

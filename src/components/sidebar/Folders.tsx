@@ -1,5 +1,6 @@
 "use client"
 
+import { IError } from "@/services/serviceTypes"
 import { Folder, FolderOpen } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -26,7 +27,7 @@ function Folders() {
       </Heading>
 
       {error ? (
-        <ErrorState />
+        <ErrorState message={(error as unknown as IError).error.message} />
       ) : !data?.data.folders?.length ? (
         <EmptyState
           title="No folders yet"

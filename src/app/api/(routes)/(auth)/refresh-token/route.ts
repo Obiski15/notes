@@ -15,11 +15,17 @@ import { cookieOptions } from "@/lib/api/utils/cookieOptions"
 export const POST = catchAsync(async (request: NextRequest) => {
   const refreshToken = getAuthToken(request, "refresh_token")
 
-  const userId = await verifyToken(refreshToken)
+  const { userId, iat } = await verifyToken(refreshToken)
 
   const user = await User.findById(userId)
 
   if (!user) throw new AppError("User does not exist", 404)
+
+  const passwordChangedSinceLastLogin =
+    await user.confirmLastPasswordChange(iat)
+
+  if (passwordChangedSinceLastLogin)
+    throw new AppError("Password has changed", 401)
 
   const accessToken = await signAccessToken({ userId })
 

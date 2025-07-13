@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { IError } from "@/services/serviceTypes"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
 import { Plus } from "lucide-react"
@@ -72,10 +73,7 @@ function CreateNote() {
           note: { title: data.data.note.title, _id: data.data.note._id },
         })
       },
-      onError: error =>
-        toast.error(
-          (error as unknown as { error: { message: string } }).error.message
-        ),
+      onError: error => toast.error((error as unknown as IError).error.message),
     })
   }
 

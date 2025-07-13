@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -54,6 +55,7 @@ function LoginForm({ redirect }: { redirect?: string }) {
                 <Input
                   placeholder="Enter email address"
                   type="email"
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -71,6 +73,7 @@ function LoginForm({ redirect }: { redirect?: string }) {
                 <Input
                   placeholder="Enter your password"
                   type="password"
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -79,10 +82,21 @@ function LoginForm({ redirect }: { redirect?: string }) {
           )}
         />
 
-        <Link href="" className="text-sm text-primary hover:underline">
+        <Link
+          href="/forgot-password"
+          className="text-sm text-primary hover:underline"
+        >
           Forgot password?
         </Link>
         <Button className="w-full" disabled={isLoading}>
+          {isLoading && (
+            <Image
+              src="/icons/loading.svg"
+              alt="loading"
+              width={20}
+              height={20}
+            />
+          )}{" "}
           Login
         </Button>
         <Footer

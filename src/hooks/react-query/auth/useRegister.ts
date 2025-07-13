@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation"
 import AuthService from "@/services/auth.service"
-import { IRegister } from "@/services/serviceTypes"
+import { IError, IRegister } from "@/services/serviceTypes"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -19,10 +19,7 @@ export const useRegister = () => {
       toast.info("Redirecting...")
       router.push("/")
     },
-    onError: error =>
-      toast.error(
-        (error as unknown as { error: { message: string } }).error.message
-      ),
+    onError: error => toast.error((error as unknown as IError).error.message),
   })
 
   return { register, isLoading, error }

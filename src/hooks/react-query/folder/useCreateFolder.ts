@@ -1,5 +1,5 @@
 import FolderService from "@/services/folder.service"
-import { ICreateFolder } from "@/services/serviceTypes"
+import { ICreateFolder, IError } from "@/services/serviceTypes"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -20,10 +20,7 @@ const useCreateFolder = () => {
       })
       toast.info("Folder created successfully")
     },
-    onError: error =>
-      toast.error(
-        (error as unknown as { error: { message: string } }).error.message
-      ),
+    onError: error => toast.error((error as unknown as IError).error.message),
   })
 
   return { isCreatingFolder, createFolder, error }

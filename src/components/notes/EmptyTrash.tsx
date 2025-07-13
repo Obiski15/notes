@@ -1,4 +1,5 @@
 import NoteService from "@/services/note.service"
+import { IError } from "@/services/serviceTypes"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -26,10 +27,7 @@ function EmptyTrash({ notes }: { notes: string[] }) {
       })
       toast.success("Trash emptied")
     },
-    onError: error =>
-      toast.error(
-        (error as unknown as { error: { message: string } }).error.message
-      ),
+    onError: error => toast.error((error as unknown as IError).error.message),
   })
 
   return (

@@ -8,10 +8,12 @@ interface CustomConfig extends InternalAxiosRequestConfig {
   retry?: true
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+
 const axiosInstance = (clientUrl: string, headers?: RawAxiosRequestHeaders) => {
   const instance = axios.create({
     timeout: 30000,
-    baseURL: `/api/${clientUrl}`,
+    baseURL: `${BASE_URL}/api/${clientUrl}`,
     headers: {
       "Content-Type": "application/json",
       ...headers,
@@ -34,7 +36,7 @@ const axiosInstance = (clientUrl: string, headers?: RawAxiosRequestHeaders) => {
           originalRequest.retry = true
 
           try {
-            await axios.post("api/refresh-token", null, {
+            await axios.post(`${BASE_URL}/api/refresh-token`, null, {
               withCredentials: true,
             })
 

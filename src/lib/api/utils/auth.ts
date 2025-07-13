@@ -63,11 +63,9 @@ const signAccessToken = async (payload: IPayload) => {
 const verifyToken = async (token: string) => {
   if (!token.length) throw new AppError("Invalid or Missing Auth token", 401)
 
-  const {
-    payload: { userId },
-  } = (await jose.jwtVerify(token, secret)) as IJwtPayload
+  const { payload } = (await jose.jwtVerify(token, secret)) as IJwtPayload
 
-  return userId
+  return payload
 }
 
 const signSendResponse = async ({

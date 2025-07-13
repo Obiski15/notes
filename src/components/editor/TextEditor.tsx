@@ -31,6 +31,7 @@ import "@/components/tiptap-ui/code-block/code-block-theme.css"
 
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
+import { IError } from "@/services/serviceTypes"
 import { Ellipsis } from "lucide-react"
 
 import { cn, toastTrash } from "@/lib/utils"
@@ -170,10 +171,7 @@ function TextEditor({ folder }: { folder?: string }) {
                   toast.info("Note updated")
                 },
                 onError: error =>
-                  toast.error(
-                    (error as unknown as { error: { message: string } }).error
-                      .message
-                  ),
+                  toast.error((error as unknown as IError).error.message),
               }
             )
           }}

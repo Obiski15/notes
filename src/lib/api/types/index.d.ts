@@ -35,6 +35,9 @@ export interface IUserDocument {
   _id: mongoose.Schema.Types.ObjectId
   password: string
   confirm_password?: string
+  passwordResetTokenExpiresIn?: number
+  passwordResetToken?: string
+  passwordUpdatedAt?: string
   googleId?: string
   email: string
   created_at: Date

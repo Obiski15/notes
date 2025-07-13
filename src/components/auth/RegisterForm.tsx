@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as z from "zod"
@@ -51,6 +52,7 @@ function RegisterForm() {
                 <Input
                   placeholder="Enter email address"
                   type="email"
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -68,6 +70,7 @@ function RegisterForm() {
                 <Input
                   placeholder="Enter your password"
                   type="password"
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -85,6 +88,7 @@ function RegisterForm() {
                 <Input
                   placeholder="Confirm your password"
                   type="password"
+                  disabled={isLoading}
                   {...field}
                 />
               </FormControl>
@@ -93,6 +97,14 @@ function RegisterForm() {
           )}
         />
         <Button className="w-full" disabled={isLoading}>
+          {isLoading && (
+            <Image
+              src="/icons/loading.svg"
+              alt="loading"
+              width={20}
+              height={20}
+            />
+          )}{" "}
           Create new account
         </Button>
         <Footer

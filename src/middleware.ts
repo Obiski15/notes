@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { Ratelimit } from "@upstash/ratelimit"
+import { Redis } from "@upstash/redis"
 
 import errorHandler from "./lib/api/helpers/errorHandler"
 import { IError } from "./lib/api/types"
@@ -9,104 +11,41 @@ const excludedPaths = [
   "/api/login",
   "/api/register",
   "/api/protect",
+  "/api/forgot-password",
+  "/api/reset-password",
   "/api/refresh-token",
 ]
 
-// export default async function middleware(request: NextRequest) {
+async function limitApiRequest(ip: string) {
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(100, "1m"),
+    analytics: true,
 
-//   if (!excludedPaths.includes(request.nextUrl.pathname)) {
-//     const nextResponse = NextResponse.next()
+    prefix: "@upstash/ratelimit",
+  })
 
-//     axios.interceptors.response.use(
-//       function (response) {
-//         if (request.nextUrl.pathname.startsWith("/api")) {
-//           nextResponse.headers.set("x-userid", response.headers["x-userid"])
-//         }
-//         return response
-//       },
-//       async function (error) {
-//         if (error instanceof AxiosError) {
-//           if (
-//             error.response?.status === 401 &&
-//             !error.response.config.url?.includes("/api/refresh-token")
-//           ) {
-//             try {
-//               // refresh token route
-//               const data = await axios.post(
-//                 `${request.nextUrl.origin}/api/refresh-token`,
-//                 null,
-//                 {
-//                   headers: {
-//                     Cookie: request.cookies.toString(),
-//                   },
-//                 }
-//               )
+  const limit = await ratelimit.limit(ip)
 
-//               // set cookie
-//               nextResponse.cookies.set(
-//                 "access_token",
-//                 data.data.data.accessToken,
-//                 {
-//                   ...cookieOptions({
-//                     // minutes to milliseconds
-//                     expires:
-//                       parseInt(configuration.JWT.accessTokenExpiresIn) *
-//                       60 *
-//                       1000,
-//                   }),
-//                 }
-//               )
-
-//               return Promise.resolve(data)
-//             } catch (error) {
-//               return Promise.reject(error)
-//             }
-//           }
-
-//           return Promise.reject(error)
-//         }
-//       }
-//     )
-
-//     try {
-//       // throw app error if there is no refresh_token
-//       //
-//       await axios.get(`${request.nextUrl.origin}/api/protect`, {
-//         headers: {
-//           Cookie: request.cookies.toString(),
-//         },
-//       })
-
-//       return nextResponse
-//     } catch (e) {
-//       if (e instanceof AxiosError) {
-//         // send json response for API test using postman
-//         if (request.nextUrl.pathname.startsWith("/api")) {
-//           return NextResponse.json({ ...e.response?.data })
-//         }
-//         if (`${e.response?.data.error.status}`.startsWith("4")) {
-//           return NextResponse.redirect(new URL("/login", request.nextUrl))
-//         }
-//         return NextResponse.redirect(new URL("/something", request.nextUrl))
-//       }
-//       return NextResponse.redirect(new URL("/something", request.nextUrl))
-//     }
-//   }
-
-//   return NextResponse.next()
-// }
+  return limit
+}
 
 export default async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/api")) {
-    if (excludedPaths.includes(request.nextUrl.pathname))
-      return NextResponse.next()
-
     try {
+      const ip = request.headers.get("x-forwarded-for")!
+      const limit = await limitApiRequest(ip)
+
+      if (!limit.success) throw new AppError("Too many requests", 429)
+
+      if (excludedPaths.find(path => request.nextUrl.pathname.includes(path)))
+        return NextResponse.next()
+
       const accessToken = request.cookies.get("access_token")?.value
 
       if (!accessToken) throw new AppError("UNAUTHORIZED", 401)
 
-      const userId = await verifyToken(accessToken)
+      const { userId } = await verifyToken(accessToken)
 
       const response = NextResponse.next()
 

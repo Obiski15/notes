@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
+import { IError } from "@/services/serviceTypes"
 import { Folder, History, Info as InfoIcon, Tag } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
@@ -53,7 +54,10 @@ function Editor() {
       ) : isLoading ? (
         <Loader />
       ) : error ? (
-        <ErrorState onRetry={refetch} />
+        <ErrorState
+          message={(error as unknown as IError).error.message}
+          onRetry={refetch}
+        />
       ) : !data?.data.note ? (
         <Info
           Icon={InfoIcon}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { useSearchParams } from "next/navigation"
+import { IError } from "@/services/serviceTypes"
 import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
 import { cn, formatDate, toastTrash } from "@/lib/utils"
@@ -72,7 +73,8 @@ function Notes() {
 
   if (isLoading) return <Loader />
 
-  if (error) return <ErrorState />
+  if (error)
+    return <ErrorState message={(error as unknown as IError).error.message} />
 
   if (!data?.data.notes.length) return <Info {...emptyState[status]} />
 

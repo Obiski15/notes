@@ -1,7 +1,9 @@
+import crypto from "crypto"
 import config from "@/config"
 import bcrypt from "bcrypt"
 import mongoose from "mongoose"
 
+import createHash from "@/lib/api/helpers/createHash"
 import { IUserDocument } from "@/lib/api/types"
 
 const userSchema = new mongoose.Schema<IUserDocument>(
@@ -34,6 +36,18 @@ const userSchema = new mongoose.Schema<IUserDocument>(
       type: String,
       select: false,
     },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetTokenExpiresIn: {
+      type: Number,
+      select: false,
+    },
+    passwordUpdatedAt: {
+      type: Number,
+      select: false,
+    },
   },
   {
     timestamps: true,
@@ -41,7 +55,7 @@ const userSchema = new mongoose.Schema<IUserDocument>(
 )
 
 userSchema.pre("save", async function (next) {
-  if (this.isNew) {
+  if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, config.saltRounds)
     this.confirm_password = undefined
   }
@@ -51,6 +65,28 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.comparePassword = async function (userPassword: string) {
   return await bcrypt.compare(userPassword, this.password)
+}
+
+userSchema.methods.createResetToken = async function () {
+  // create reset token
+  const resetToken = crypto.randomBytes(32).toString("hex")
+  this.passwordResetToken = createHash(resetToken)
+  this.passwordResetTokenExpiresIn =
+    Date.now() + config.AUTH.passwordResetTokenExpiresIn
+
+  return resetToken
+}
+
+userSchema.methods.validateResetToken = async function () {
+  const isTokenValid = Date.now() < this.passwordResetTokenExpiresIn
+
+  return isTokenValid
+}
+
+userSchema.methods.confirmLastPasswordChange = async function (
+  jwtIssuedAt: number
+) {
+  return this.passwordUpdatedAt > jwtIssuedAt
 }
 
 const User =

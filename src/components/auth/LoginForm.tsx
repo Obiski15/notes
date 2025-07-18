@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,6 +10,7 @@ import { loginSchema } from "@/schema/auth-schema"
 
 import { useLogin } from "@/hooks/react-query/auth/useLogin"
 
+import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -22,6 +22,7 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import Footer from "./Footer"
+import GoogleAuth from "./GoogleAuth"
 
 function LoginForm({ redirect }: { redirect?: string }) {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -89,16 +90,9 @@ function LoginForm({ redirect }: { redirect?: string }) {
           Forgot password?
         </Link>
         <Button className="w-full" disabled={isLoading}>
-          {isLoading && (
-            <Image
-              src="/icons/loading.svg"
-              alt="loading"
-              width={20}
-              height={20}
-            />
-          )}{" "}
-          Login
+          {isLoading && <Spinner />} Login
         </Button>
+        <GoogleAuth disabled={isLoading}>Sign in with Google</GoogleAuth>
         <Footer
           link="Create an account"
           href="/register"

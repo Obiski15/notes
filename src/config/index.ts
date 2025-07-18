@@ -3,6 +3,7 @@ interface IConfig {
     uri: string
     name: string
   }
+  CLIENT_URL: string
   AUTH: {
     passwordResetTokenExpiresIn: number
   }
@@ -10,6 +11,10 @@ interface IConfig {
     secret: string
     accessTokenExpiresIn: string
     refreshTokenExpiresIn: string
+  }
+  COOKIES: {
+    accessTokenExpiresIn: number
+    refreshTokenExpiresIn: number
   }
   MAILTRAP: {
     user: string
@@ -21,7 +26,6 @@ interface IConfig {
   GOOGLE: {
     clientId: string
     clientSecret: string
-    refreshToken: string
     pass: string
     user: string
   }
@@ -37,10 +41,16 @@ const config: IConfig = {
     name: "notes",
   },
   nodeEnv: ENV["NODE_ENV"] as "development" | "production",
+  CLIENT_URL: ENV["CLIENT_URL"]!,
   JWT: {
     secret: ENV["JWT_SECRET"]!,
     accessTokenExpiresIn: ENV["ACCESS_TOKEN_EXPIRES_IN"] ?? "0",
     refreshTokenExpiresIn: ENV["REFRESH_TOKEN_EXPIRES_IN"] ?? "0",
+  },
+  COOKIES: {
+    accessTokenExpiresIn: parseInt(ENV["ACCESS_TOKEN_EXPIRES_IN"]!) * 60 * 1000, // minutes to milliseconds
+    refreshTokenExpiresIn:
+      parseInt(ENV["REFRESH_TOKEN_EXPIRES_IN"]!) * 7 * 24 * 60 * 60 * 1000, // weeks to milliseconds
   },
   AUTH: {
     passwordResetTokenExpiresIn: 5 * 60 * 1000,
@@ -55,7 +65,6 @@ const config: IConfig = {
   GOOGLE: {
     clientId: ENV["GOOGLE_CLIENT_ID"]!,
     clientSecret: ENV["GOOGLE_CLIENT_SECRET"]!,
-    refreshToken: ENV["GOOGLE_REFRESH_TOKEN"]!,
     pass: ENV["GOOGLE_PASS"]!,
     user: ENV["GOOGLE_MAIL"]!,
   },

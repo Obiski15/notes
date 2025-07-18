@@ -4,7 +4,7 @@ import catchAsync from "@/lib/api/helpers/catchAsync"
 import sendResponse from "@/lib/api/helpers/sendResponse"
 
 export const POST = catchAsync(async (_request: NextRequest) => {
-  const authCookies = ["refresh_token", "access_token"]
+  const authCookies = ["refreshToken", "accessToken"]
 
   const response = sendResponse({ statusCode: 200, status: "success" })
 

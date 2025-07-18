@@ -31,12 +31,12 @@ const axiosInstance = (clientUrl: string, headers?: RawAxiosRequestHeaders) => {
         if (
           err.response?.status === 401 &&
           !originalRequest.retry &&
-          !err.response.config.url?.includes("/api/refresh-token")
+          !err.response.config.url?.includes("/api/auth/refresh-token")
         ) {
           originalRequest.retry = true
 
           try {
-            await axios.post(`${BASE_URL}/api/refresh-token`, null, {
+            await axios.post(`${BASE_URL}/api/auth/refresh-token`, null, {
               withCredentials: true,
             })
 

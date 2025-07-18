@@ -13,7 +13,7 @@ import {
 import { cookieOptions } from "@/lib/api/utils/cookieOptions"
 
 export const POST = catchAsync(async (request: NextRequest) => {
-  const refreshToken = getAuthToken(request, "refresh_token")
+  const refreshToken = getAuthToken(request, "refreshToken")
 
   const { userId, iat } = await verifyToken(refreshToken)
 
@@ -34,10 +34,9 @@ export const POST = catchAsync(async (request: NextRequest) => {
     statusCode: 200,
   })
 
-  response.cookies.set("access_token", accessToken, {
+  response.cookies.set("accessToken", accessToken, {
     ...cookieOptions({
-      // minutes to milliseconds
-      expires: parseInt(config.JWT.accessTokenExpiresIn) * 60 * 1000,
+      expires: config.COOKIES.accessTokenExpiresIn,
     }),
   })
 

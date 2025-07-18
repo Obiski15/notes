@@ -66,9 +66,7 @@ function Notes() {
   const { addRecentNote } = useUpdateRecentNotes()
 
   useEffect(() => {
-    if (noteId) {
-      if (!isDesktop) editorSheetRef.current?.click()
-    }
+    if (noteId && !isDesktop) editorSheetRef.current?.click()
   }, [noteId, isDesktop])
 
   if (isLoading) return <Loader />
@@ -76,57 +74,61 @@ function Notes() {
   if (error)
     return <ErrorState message={(error as unknown as IError).error.message} />
 
-  if (!data?.data.notes.length) return <Info {...emptyState[status]} />
-
   return (
-    <div className="h-full space-y-5 px-5 py-7">
-      {status === "trash" && !!data?.data.notes.length && (
-        <EmptyTrash notes={data.data.notes.map(note => note._id)} />
-      )}
-
-      <div className="lg:hidden">
-        <SearchNote />
-      </div>
-
-      {data?.data.notes.map(note => (
-        <div
-          key={note._id}
-          className={cn(
-            "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left hover:scale-105",
-            noteId === note._id ? "bg-foreground/10" : "bg-[#FFFFFF08]"
+    <>
+      {!data?.data.notes.length ? (
+        <Info {...emptyState[status]} />
+      ) : (
+        <div className="h-full space-y-5 px-5 py-7">
+          {status === "trash" && !!data?.data.notes.length && (
+            <EmptyTrash notes={data.data.notes.map(note => note._id)} />
           )}
-          onClick={async () => {
-            if (status === "trash") return toastTrash()
-            addRecentNote({
-              id: String(user?.data.user._id),
-              note: { title: String(note.title), _id: String(note._id) },
-            })
-            if (noteId === note._id) {
-              if (!isDesktop) editorSheetRef.current?.click()
-            }
-          }}
-        >
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="flex-1 break-all text-lg font-semibold capitalize leading-7">
-              {note.title}
-            </h3>
-            <NoteIcon note={note} />
+
+          <div className="lg:hidden">
+            <SearchNote />
           </div>
 
-          <div className="flex flex-wrap items-start justify-start gap-2">
-            {note.tags.map((tag, index) => (
-              <Badge
-                key={`tag-${tag}-${index}}`}
-                variant="outline"
-                className="capitalize"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-          <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
+          {data?.data.notes.map(note => (
+            <div
+              key={note._id}
+              className={cn(
+                "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left hover:scale-105",
+                noteId === note._id ? "bg-foreground/10" : "bg-[#FFFFFF08]"
+              )}
+              onClick={async () => {
+                if (status === "trash") return toastTrash()
+                addRecentNote({
+                  id: String(user?.data.user._id),
+                  note: { title: String(note.title), _id: String(note._id) },
+                })
+                if (noteId === note._id) {
+                  if (!isDesktop) editorSheetRef.current?.click()
+                }
+              }}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="flex-1 break-all text-lg font-semibold capitalize leading-7">
+                  {note.title}
+                </h3>
+                <NoteIcon note={note} />
+              </div>
+
+              <div className="flex flex-wrap items-start justify-start gap-2">
+                {note.tags.map((tag, index) => (
+                  <Badge
+                    key={`tag-${tag}-${index}}`}
+                    variant="outline"
+                    className="capitalize"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+              <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
 
       {!isDesktop && (
         <>
@@ -147,7 +149,7 @@ function Notes() {
           <CreateNote />
         </>
       )}
-    </div>
+    </>
   )
 }
 

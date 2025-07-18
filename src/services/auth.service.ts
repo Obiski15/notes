@@ -10,7 +10,7 @@ import {
 
 export default class AuthService extends BaseService {
   constructor() {
-    super("/")
+    super("/auth")
   }
 
   async login(data: ILogin) {

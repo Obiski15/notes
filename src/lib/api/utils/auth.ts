@@ -17,7 +17,7 @@ type IJwtPayload = jose.JWTVerifyResult<IPayload>
 
 const getAuthToken = (
   request: NextRequest,
-  token: "refresh_token" | "access_token"
+  token: "refreshToken" | "accessToken"
 ) => {
   const authToken = request.cookies.get(token)?.value
 
@@ -86,18 +86,15 @@ const signSendResponse = async ({
     data: { data },
   })
 
-  response.cookies.set("access_token", accessToken, {
+  response.cookies.set("accessToken", accessToken, {
     ...cookieOptions({
-      // minutes to milliseconds
-      expires: parseInt(config.JWT.accessTokenExpiresIn) * 60 * 1000,
+      expires: config.COOKIES.accessTokenExpiresIn,
     }),
   })
 
-  response.cookies.set("refresh_token", refreshToken, {
+  response.cookies.set("refreshToken", refreshToken, {
     ...cookieOptions({
-      expires:
-        // weeks to milliseconds
-        parseInt(config.JWT.refreshTokenExpiresIn) * 7 * 24 * 60 * 60 * 1000,
+      expires: config.COOKIES.refreshTokenExpiresIn,
     }),
   })
 
@@ -107,6 +104,7 @@ const signSendResponse = async ({
 export {
   getAuthToken,
   signAccessToken,
+  signRefreshToken,
   signSendResponse,
   signToken,
   verifyToken,

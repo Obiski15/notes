@@ -7,14 +7,7 @@ import { IError } from "./lib/api/types"
 import AppError from "./lib/api/utils/AppError"
 import { verifyToken } from "./lib/api/utils/auth"
 
-const excludedPaths = [
-  "/api/login",
-  "/api/register",
-  "/api/protect",
-  "/api/forgot-password",
-  "/api/reset-password",
-  "/api/refresh-token",
-]
+const excludedPaths = ["/api/auth"]
 
 async function limitApiRequest(ip: string) {
   const ratelimit = new Ratelimit({
@@ -41,7 +34,7 @@ export default async function middleware(request: NextRequest) {
       if (excludedPaths.find(path => request.nextUrl.pathname.includes(path)))
         return NextResponse.next()
 
-      const accessToken = request.cookies.get("access_token")?.value
+      const accessToken = request.cookies.get("accessToken")?.value
 
       if (!accessToken) throw new AppError("UNAUTHORIZED", 401)
 
@@ -59,10 +52,6 @@ export default async function middleware(request: NextRequest) {
 
   return NextResponse.next()
 }
-
-// export const config = {
-//   matcher: ["/", "/:path", "/api/:path"],
-// }
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|public).*)"],

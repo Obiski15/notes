@@ -8,16 +8,32 @@ const schema = zod.object({
     .trim(),
   tags: zod
     .string()
-    .min(3, "Note title must be at least 3 characters long")
     .toLowerCase()
     .trim()
-    .optional(),
+    .optional()
+    .refine(
+      tag => {
+        if (!tag) return true
+        return tag.length >= 3
+      },
+      {
+        message: "Note tag must be at least 3 character long  ",
+      }
+    ),
   folder: zod
     .string()
-    .min(3, "Folder name must be at least 3 characters long")
     .toLowerCase()
     .trim()
-    .optional(),
+    .optional()
+    .refine(
+      folder => {
+        if (!folder) return true
+        return folder.length >= 3
+      },
+      {
+        message: "Folder name must be at least 3 character long  ",
+      }
+    ),
 })
 
 export default schema

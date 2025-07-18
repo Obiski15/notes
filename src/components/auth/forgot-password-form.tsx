@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as z from "zod"
@@ -9,6 +8,7 @@ import { forgotPasswordSchema } from "@/schema/auth-schema"
 
 import { useForgotPassword } from "@/hooks/react-query/auth/useForgotPassword"
 
+import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
@@ -51,15 +51,7 @@ function ForgotPasswordForm() {
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading && (
-            <Image
-              src="/icons/loading.svg"
-              alt="loading"
-              width={20}
-              height={20}
-            />
-          )}{" "}
-          Reset Password
+          {isLoading && <Spinner />} Reset Password
         </Button>
       </Form>
     </form>

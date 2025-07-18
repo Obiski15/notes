@@ -44,7 +44,7 @@ function Recents() {
             )}
           >
             <CustomIcon Icon={FileText} />
-            <p className="line-clamp-1 font-semibold capitalize text-foreground/60">
+            <p className="line-clamp-1 flex-1 text-left font-semibold capitalize text-foreground/60">
               {title}
             </p>
           </button>

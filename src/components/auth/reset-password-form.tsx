@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -10,6 +9,7 @@ import { resetPasswordSchema } from "@/schema/auth-schema"
 
 import { useResetPassword } from "@/hooks/react-query/auth/useResetPassword"
 
+import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
@@ -74,15 +74,7 @@ function ResetPasswordForm() {
           )}
         />
         <Button className="w-full" type="submit" disabled={isResetting}>
-          {isResetting && (
-            <Image
-              src="/icons/loading.svg"
-              alt="loading"
-              width={20}
-              height={20}
-            />
-          )}{" "}
-          Reset Password
+          {isResetting && <Spinner />} Reset Password
         </Button>
       </Form>
     </form>

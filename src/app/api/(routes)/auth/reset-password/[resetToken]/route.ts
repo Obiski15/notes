@@ -43,8 +43,8 @@ export const POST = catchAsync(
     const response = sendResponse({ status: "success", statusCode: 200 })
 
     // invalidate auth cookies
-    response.cookies.set("refresh_token", "", { maxAge: 0 })
-    response.cookies.set("access_token", "", { maxAge: 0 })
+    response.cookies.set("refreshToken", "", { maxAge: 0 })
+    response.cookies.set("accessToken", "", { maxAge: 0 })
 
     return response
   }

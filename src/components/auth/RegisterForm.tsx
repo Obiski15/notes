@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as z from "zod"
@@ -9,6 +8,7 @@ import { registerSchema } from "@/schema/auth-schema"
 
 import { useRegister } from "@/hooks/react-query/auth/useRegister"
 
+import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -20,6 +20,7 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 import Footer from "./Footer"
+import GoogleAuth from "./GoogleAuth"
 
 function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -97,16 +98,9 @@ function RegisterForm() {
           )}
         />
         <Button className="w-full" disabled={isLoading}>
-          {isLoading && (
-            <Image
-              src="/icons/loading.svg"
-              alt="loading"
-              width={20}
-              height={20}
-            />
-          )}{" "}
-          Create new account
+          {isLoading && <Spinner />} Create new account
         </Button>
+        <GoogleAuth disabled={isLoading}>Sign up with Google</GoogleAuth>
         <Footer
           link="Login"
           href="/login"

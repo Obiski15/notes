@@ -59,7 +59,10 @@ function CreateNote() {
   const { user } = useUser()
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
-    const data = { ...values, tags: values.tags?.split(",") }
+    const data = {
+      ...values,
+      tags: !values.tags ? [] : values.tags?.split(","),
+    }
 
     createNote(data, {
       onSuccess: data => {

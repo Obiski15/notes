@@ -23,7 +23,7 @@ async function limitApiRequest(ip: string) {
   return limit
 }
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/api")) {
     try {
       const ip = request.headers.get("x-forwarded-for")!

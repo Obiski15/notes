@@ -1,19 +1,9 @@
-import { Settings as SettingsIcon } from "lucide-react"
+"use client"
 
-import CustomIcon from "../shared/CustomIcon"
+import SettingsPanel from "./SettingsPanel"
 
-function Settings() {
-  return (
-    <button
-      className="rounded-md p-2 transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active"
-      aria-label="Open settings"
-    >
-      <CustomIcon
-        Icon={SettingsIcon}
-        className="text-text-tertiary transition-colors hover:text-text-primary"
-      />
-    </button>
-  )
+function Settings({ showLabel = false }: { showLabel?: boolean }) {
+  return <SettingsPanel showLabel={showLabel} />
 }
 
 export default Settings

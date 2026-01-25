@@ -30,7 +30,9 @@ function Sidebar() {
       </div>
 
       {/* Settings for mobile */}
-      <Settings showLabel />
+      <div className="lg:hidden">
+        <Settings showLabel />
+      </div>
     </aside>
   )
 }

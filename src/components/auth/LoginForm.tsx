@@ -83,12 +83,14 @@ function LoginForm({ redirect }: { redirect?: string }) {
           )}
         />
 
-        <Link
-          href="/forgot-password"
-          className="text-sm text-primary hover:underline"
-        >
-          Forgot password?
-        </Link>
+        <div className="flex justify-end">
+          <Link
+            href="/forgot-password"
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
         <Button className="w-full" disabled={isLoading}>
           {isLoading && <Spinner />} Login
         </Button>

@@ -10,9 +10,9 @@ function Footer({
   description: string
 }) {
   return (
-    <div className="space-x-1 text-center">
-      <span>{description}</span>
-      <Link href={href} className="text-primary hover:underline">
+    <div className="text-center text-sm">
+      <span className="text-text-secondary">{description}</span>{" "}
+      <Link href={href} className="font-medium text-primary hover:underline">
         {link}
       </Link>
     </div>

@@ -11,7 +11,14 @@ import { useResetPassword } from "@/hooks/react-query/auth/useResetPassword"
 
 import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
 import { Input } from "../ui/input"
 
 function ResetPasswordForm() {
@@ -44,6 +51,7 @@ function ResetPasswordForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <FormItem>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -61,6 +69,7 @@ function ResetPasswordForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <FormItem>
+              <FormLabel>Confirm New Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"

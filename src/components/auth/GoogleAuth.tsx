@@ -11,11 +11,11 @@ const GoogleAuth = ({ children, ...rest }: ButtonProps) => {
       <Button
         type="button"
         variant="outline"
-        className="w-full"
+        className="w-full gap-2"
         {...rest}
         onClick={() => signIn("google", { callbackUrl: "/" })}
       >
-        <Image src="/icons/google.svg" alt="google" width={20} height={20} />{" "}
+        <Image src="/icons/google.svg" alt="google" width={20} height={20} />
         {children}
       </Button>
     </SessionProvider>

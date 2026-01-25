@@ -10,7 +10,14 @@ import { useForgotPassword } from "@/hooks/react-query/auth/useForgotPassword"
 
 import Spinner from "../shared/Spinner"
 import { Button } from "../ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
 import { Input } from "../ui/input"
 
 function ForgotPasswordForm() {
@@ -38,6 +45,7 @@ function ForgotPasswordForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <FormItem>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
                   type="email"

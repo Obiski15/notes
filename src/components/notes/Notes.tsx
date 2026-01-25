@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { IError, NOTESTATUS } from "@/types"
 import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
-import { cn, formatDate, toastTrash } from "@/lib/utils"
+import { extractNoteId, toastTrash } from "@/lib/helpers"
+import { cn, formatDate } from "@/lib/utils"
 import { useNotes } from "@/hooks/react-query/notes/useNotes"
 import { useUpdateRecentNotes } from "@/hooks/react-query/notes/useUpdateRecentNotes"
 import { useUser } from "@/hooks/react-query/user/useUser"
@@ -54,20 +55,33 @@ const emptyState = {
 }
 
 function Notes() {
-  const editorSheetRef = useRef<null | HTMLButtonElement>(null)
+  const [isNoteOpen, setIsNoteOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 1024px)")
   const { folder, status } = useNoteLocation()
-  const noteId = useSearchParams().get("note") || ""
+  const noteId = extractNoteId(usePathname())
+
   const { data, isLoading, error } = useNotes({
     folder: folder._id,
     status,
   })
-  const { user } = useUser()
   const { addRecentNote } = useUpdateRecentNotes()
+  const { user } = useUser()
+  const router = useRouter()
 
   useEffect(() => {
-    if (noteId && !isDesktop) editorSheetRef.current?.click()
+    if (noteId && !isDesktop && !isNoteOpen) {
+      setIsNoteOpen(true)
+    }
   }, [noteId, isDesktop])
+
+  const handleOpenChange = (open: boolean) => {
+    setIsNoteOpen(open)
+
+    if (!open) {
+      setIsNoteOpen(false)
+      router.push("/")
+    }
+  }
 
   if (isLoading) return <Loader />
 
@@ -104,7 +118,7 @@ function Notes() {
                   note: { title: String(note.title), _id: String(note._id) },
                 })
                 if (noteId === note._id) {
-                  if (!isDesktop) editorSheetRef.current?.click()
+                  if (!isDesktop) setIsNoteOpen(true)
                 }
               }}
             >
@@ -134,8 +148,8 @@ function Notes() {
 
       {!isDesktop && (
         <>
-          <Sheet>
-            <SheetTrigger ref={editorSheetRef} hidden></SheetTrigger>
+          <Sheet open={isNoteOpen} onOpenChange={handleOpenChange}>
+            <SheetTrigger hidden></SheetTrigger>
             <SheetHeader className="hidden">
               <SheetTitle>Sidebar header</SheetTitle>
               <SheetDescription>Sidebar description</SheetDescription>

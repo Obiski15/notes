@@ -1,11 +1,16 @@
 import { Metadata } from "next"
 
-import HomeComponent from "@/components/main/HomeComponent"
+import MainComponent from "@/components/main/MainComponent"
+import SelectNote from "@/components/shared/notes/SelectNote"
 
 export const metadata: Metadata = {
   title: "Home",
 }
 
 export default function Home() {
-  return <HomeComponent />
+  return (
+    <MainComponent>
+      <SelectNote />
+    </MainComponent>
+  )
 }

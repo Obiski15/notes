@@ -27,11 +27,7 @@ export default function RootLayout({
           <div className="max-lg:hidden lg:col-span-3">
             <Sidebar />
           </div>
-
-          {/* <div className="col-span-12 h-full lg:col-span-9">
-            <Header /> */}
           {children}
-          {/* </div> */}
         </div>
       </NoteLocationProvider>
     </Protected>

@@ -30,11 +30,12 @@ import "@/components/tiptap-node/paragraph-node/paragraph-node.scss"
 import "@/components/tiptap-ui/code-block/code-block-theme.css"
 
 import { useEffect } from "react"
-import { useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { IError, NOTESTATUS } from "@/types"
 import { Ellipsis } from "lucide-react"
 
-import { cn, toastTrash } from "@/lib/utils"
+import { extractNoteId, toastTrash } from "@/lib/helpers"
+import { cn } from "@/lib/utils"
 import { useNote } from "@/hooks/react-query/notes/useNote"
 import { useUpdateNote } from "@/hooks/react-query/notes/useUpdateNote"
 
@@ -71,8 +72,7 @@ function MarkButtonsGroup() {
 }
 
 function TextEditor({ folder }: { folder?: string }) {
-  const searchParams = useSearchParams()
-  const note = searchParams.get("note") || ""
+  const note = extractNoteId(usePathname())
 
   const { data } = useNote({ noteId: note })
   const { update, isUpdating } = useUpdateNote(note)

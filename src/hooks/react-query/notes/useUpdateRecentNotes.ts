@@ -14,7 +14,7 @@ export const useUpdateRecentNotes = () => {
 
     onSuccess: id => {
       queryClient.invalidateQueries({ queryKey: ["recents"] })
-      router.push(`/?note=${id}`)
+      router.push(`/note/${id}`)
     },
   })
 

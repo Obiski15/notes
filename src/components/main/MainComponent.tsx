@@ -1,12 +1,11 @@
 "use client"
 
-import { useRef } from "react"
+import { ReactNode, useRef } from "react"
 
-import Editor from "../editor/Editor"
 import Header from "../header/Header"
 import Notes from "../notes/Notes"
 
-function HomeComponent() {
+function MainComponent({ children }: { children: ReactNode }) {
   const headerRef = useRef<HTMLDivElement | null>(null)
 
   return (
@@ -24,10 +23,10 @@ function HomeComponent() {
         </div>
 
         <div className="h-[calc(100vh-68px) no_scrollbar col-span-8 overflow-y-scroll max-lg:hidden">
-          <Editor />
+          {children}
         </div>
       </div>
     </div>
   )
 }
-export default HomeComponent
+export default MainComponent

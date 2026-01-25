@@ -1,8 +1,9 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { FileText } from "lucide-react"
 
+import { extractNoteId } from "@/lib/helpers"
 import { cn } from "@/lib/tiptap-utils"
 import { useRecentNotes } from "@/hooks/react-query/notes/useRecentNotes"
 import { useUpdateRecentNotes } from "@/hooks/react-query/notes/useUpdateRecentNotes"
@@ -13,7 +14,7 @@ import EmptyState from "./empty-state"
 import Heading from "./heading"
 
 function Recents() {
-  const noteId = useSearchParams().get("note")
+  const noteId = extractNoteId(usePathname())
   const { addRecentNote } = useUpdateRecentNotes()
 
   const { user } = useUser()

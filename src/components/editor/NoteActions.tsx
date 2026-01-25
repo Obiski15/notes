@@ -1,10 +1,11 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { NOTESTATUS } from "@/types"
 import { Archive, CircleEllipsis, Star, Trash } from "lucide-react"
 import { toast } from "sonner"
 
+import { extractNoteId } from "@/lib/helpers"
 import { useNote } from "@/hooks/react-query/notes/useNote"
 import { useUpdateNote } from "@/hooks/react-query/notes/useUpdateNote"
 
@@ -12,7 +13,7 @@ import CustomIcon from "../shared/CustomIcon"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 
 function NoteActions() {
-  const noteId = useSearchParams().get("note") || ""
+  const noteId = extractNoteId(usePathname())
   const { update, isUpdating } = useUpdateNote(noteId)
   const { data: note } = useNote({ noteId })
 

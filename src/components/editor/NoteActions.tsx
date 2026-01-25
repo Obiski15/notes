@@ -47,7 +47,7 @@ function NoteActions() {
               status: "favorites",
             })
           }
-          className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover active:bg-state-active disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active disabled:cursor-not-allowed disabled:opacity-60"
           aria-label="Add to favorites"
         >
           <CustomIcon Icon={Star} className="text-text-tertiary" />
@@ -64,7 +64,7 @@ function NoteActions() {
                   status: "archive",
                 })
               }
-              className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover active:bg-state-active disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active disabled:cursor-not-allowed disabled:opacity-60"
               aria-label="Archive note"
             >
               <CustomIcon Icon={Archive} className="text-text-tertiary" />
@@ -80,7 +80,7 @@ function NoteActions() {
                   status: "trash",
                 })
               }
-              className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-error transition-all duration-200 hover:bg-error/10 active:bg-error/20 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-error transition-all duration-200 hover:bg-error/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error active:bg-error/20 disabled:cursor-not-allowed disabled:opacity-60"
               aria-label="Move to trash"
             >
               <CustomIcon Icon={Trash} className="text-error" />

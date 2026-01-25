@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 function Spinner({ className }: { className?: string }) {
   return (
     <Image
-      className={cn(className)}
+      className={cn("size-5", className)}
       src="/icons/loading.svg"
       alt="loading"
       width={20}

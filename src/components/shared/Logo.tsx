@@ -12,11 +12,11 @@ function Logo() {
   return (
     <Link
       href="/"
-      className="flex h-[38px] items-center justify-start gap-2 rounded-md transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+      className="flex h-10 items-center justify-start gap-2 rounded-md transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
       aria-label="Go to home page"
     >
       <p
-        className={`${KaushaScript.className} text-[26px] font-normal text-text-primary`}
+        className={`${KaushaScript.className} text-2xl font-normal text-text-primary`}
       >
         Notes
       </p>

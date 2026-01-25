@@ -7,7 +7,7 @@ function HeaderGroup({
 }) {
   return (
     <div className="space-y-2">
-      <h2 className="text-[32px] font-bold leading-[48px] text-text-primary">
+      <h2 className="text-3xl font-bold leading-tight text-text-primary">
         {title}
       </h2>
       <p className="text-base leading-6 text-text-secondary">{description}</p>

@@ -15,7 +15,13 @@ const GoogleAuth = ({ children, ...rest }: ButtonProps) => {
         {...rest}
         onClick={() => signIn("google", { callbackUrl: "/" })}
       >
-        <Image src="/icons/google.svg" alt="google" width={20} height={20} />
+        <Image
+          src="/icons/google.svg"
+          alt="google"
+          width={20}
+          height={20}
+          className="size-5"
+        />
         {children}
       </Button>
     </SessionProvider>

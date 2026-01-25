@@ -51,7 +51,7 @@ function Header({ ref }: { ref?: Ref<HTMLDivElement> }) {
         <Logo />
       </div>
 
-      <p className="text-[22px] font-semibold capitalize max-lg:hidden">
+      <p className="text-2xl font-semibold capitalize max-lg:hidden">
         {folder.name || (!(status === "active") ? status : "All Notes")}
       </p>
 

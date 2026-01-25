@@ -68,7 +68,7 @@ function Editor() {
       ) : (
         <div className="space-y-7">
           <div className="flex items-center justify-between gap-2">
-            <h1 className="break-all text-2xl font-semibold capitalize lg:text-[32px]">
+            <h1 className="break-all text-2xl font-semibold capitalize lg:text-3xl">
               {data?.data.note?.title}
             </h1>
             <NoteActions />

@@ -45,10 +45,8 @@ const Info = ({
         )}
 
         <div className="space-y-2">
-          <h2 className="text-[28px] font-semibold text-text-primary">
-            {title}
-          </h2>
-          <p className="mt-1 text-sm leading-[26px] text-text-secondary">
+          <h2 className="text-3xl font-semibold text-text-primary">{title}</h2>
+          <p className="mt-1 text-sm leading-relaxed text-text-secondary">
             {message}
           </p>
         </div>

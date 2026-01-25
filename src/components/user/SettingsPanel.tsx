@@ -1,13 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
 import {
   Bell,
   Keyboard,
   Lock,
-  LogOut,
   Palette,
   Settings as SettingsIcon,
   User,
@@ -15,6 +13,7 @@ import {
 
 import { useUser } from "@/hooks/react-query/user/useUser"
 
+import Logout from "../auth/Logout"
 import CustomIcon from "../shared/CustomIcon"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
@@ -287,16 +286,7 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
           <Separator />
 
           {/* Logout Section */}
-          <div className="space-y-4">
-            <Button
-              variant="outline"
-              className="w-full justify-start gap-3 text-error hover:bg-error/10 hover:text-error"
-              onClick={() => signOut({ callbackUrl: "/login" })}
-            >
-              <CustomIcon Icon={LogOut} className="text-error" />
-              Logout
-            </Button>
-          </div>
+          <Logout />
 
           <Separator />
 

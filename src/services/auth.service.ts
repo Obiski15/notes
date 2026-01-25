@@ -21,6 +21,10 @@ export default class AuthService extends BaseService {
     return await this.post<IRegister, IAuth>("/register", data)
   }
 
+  async logout() {
+    return await this.post<null, IResponse>("/logout", null)
+  }
+
   async forgotPassword(data: IForgotPassword) {
     return await this.post<IForgotPassword, IResponse>("/forgot-password", data)
   }

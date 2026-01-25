@@ -13,6 +13,7 @@ import { useNote } from "@/hooks/react-query/notes/useNote"
 import CustomIcon from "../shared/CustomIcon"
 import ErrorState from "../shared/Error"
 import Info from "../shared/Info"
+import NoFolderCreated from "../shared/notes/NoFolderCreated"
 import SelectNote from "../shared/notes/SelectNote"
 import {
   Select,
@@ -106,11 +107,16 @@ function Editor() {
                     </SelectTrigger>
 
                     <SelectContent>
-                      {folders!.data.folders?.map(folder => (
-                        <SelectItem key={folder._id} value={folder._id}>
-                          {folder.name}
-                        </SelectItem>
-                      ))}
+                      {folders?.data.folders &&
+                      folders.data.folders.length > 0 ? (
+                        folders.data.folders.map(folder => (
+                          <SelectItem key={folder._id} value={folder._id}>
+                            {folder.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <NoFolderCreated />
+                      )}
                     </SelectContent>
                   </Select>
                 )}

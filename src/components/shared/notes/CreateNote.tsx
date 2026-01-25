@@ -44,6 +44,7 @@ import {
   SelectValue,
 } from "../../ui/select"
 import CustomIcon from "../CustomIcon"
+import NoFolderCreated from "./NoFolderCreated"
 
 function CreateNote() {
   const folders = useFolders()
@@ -166,11 +167,16 @@ function CreateNote() {
                           <SelectValue placeholder="Select a folder" />
                         </SelectTrigger>
                         <SelectContent>
-                          {folders.data?.data.folders?.map(folder => (
-                            <SelectItem key={folder._id} value={folder._id}>
-                              {folder.name}
-                            </SelectItem>
-                          ))}
+                          {folders?.data?.data.folders &&
+                          folders.data.data.folders.length > 0 ? (
+                            folders.data?.data.folders?.map(folder => (
+                              <SelectItem key={folder._id} value={folder._id}>
+                                {folder.name}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <NoFolderCreated />
+                          )}
                         </SelectContent>
                       </Select>
                     </FormControl>

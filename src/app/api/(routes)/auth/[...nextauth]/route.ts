@@ -7,7 +7,6 @@ import User from "@/models/user.model"
 import db from "@/lib/api/helpers/db"
 import { signAccessToken, signRefreshToken } from "@/lib/api/utils/auth"
 import { cookieOptions } from "@/lib/api/utils/cookieOptions"
-import logger from "@/lib/logger"
 
 const authOptions: AuthOptions = {
   providers: [
@@ -55,7 +54,7 @@ const authOptions: AuthOptions = {
 
         return true
       } catch (error) {
-        logger.error(error)
+        console.error(error)
         return false
       }
     },

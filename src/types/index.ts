@@ -73,9 +73,9 @@ export interface IUpdateNote extends Partial<Omit<Note, "folder">> {
   folder?: string
 }
 
-type IRecentNote = { title: string; _id: string }
+export type IRecentNote = { title: string; _id: string }
 
-type IRecentNotes = IRecentNote[]
+export type IRecentNotes = IRecentNote[]
 
 export interface IUser extends IResponse {
   data: {

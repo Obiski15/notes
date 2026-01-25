@@ -1,4 +1,5 @@
-import { IRecentNote, IRecentNotes } from "../types"
+import { IRecentNote, IRecentNotes } from "@/types"
+
 import { IdbService } from "./idb.service"
 
 export interface INotes {

@@ -1,8 +1,6 @@
 import config from "@/config"
 import mongoose from "mongoose"
 
-import logger from "@/lib/logger"
-
 const connection: { isConnected?: number } = {}
 
 async function db() {
@@ -16,7 +14,7 @@ async function db() {
     })
     connection.isConnected = db.connections[0].readyState
 
-    logger.info("connection successful")
+    console.info("connection successful")
   } catch (error) {
     throw new Error((error as Error).message)
   }

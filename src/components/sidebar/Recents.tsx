@@ -39,12 +39,23 @@ function Recents() {
               })
             }}
             className={cn(
-              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5 transition-all`,
-              _id === noteId ? "bg-primary" : "bg-transparent"
+              "flex w-full items-center justify-start gap-3 rounded-md px-5 py-2.5 transition-all duration-200",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-surface-background",
+              _id === noteId
+                ? "bg-state-active text-text-primary"
+                : "bg-transparent text-text-secondary hover:bg-state-hover hover:text-text-primary active:bg-state-active"
             )}
+            aria-label={`Open note: ${title}`}
+            aria-current={_id === noteId ? "page" : undefined}
           >
-            <CustomIcon Icon={FileText} />
-            <p className="line-clamp-1 flex-1 text-left font-semibold capitalize text-foreground/60">
+            <CustomIcon
+              Icon={FileText}
+              className={cn(
+                "transition-colors duration-200",
+                _id === noteId ? "text-primary" : "text-text-tertiary"
+              )}
+            />
+            <p className="line-clamp-1 flex-1 text-left font-medium capitalize">
               {title}
             </p>
           </button>

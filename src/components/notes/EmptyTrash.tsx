@@ -33,7 +33,7 @@ function EmptyTrash({ notes }: { notes: string[] }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger disabled={isClearingTrash} asChild>
-        <button className="w-full text-right text-destructive hover:underline">
+        <button className="w-full text-right text-sm font-medium text-error transition-colors duration-200 hover:text-error-hover hover:underline disabled:cursor-not-allowed disabled:opacity-50">
           clear all
         </button>
       </AlertDialogTrigger>

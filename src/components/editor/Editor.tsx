@@ -76,29 +76,31 @@ function Editor() {
 
           <>
             <div className="text-sm font-medium capitalize">
-              <div className="space-y-3.5 border-b border-b-foreground/10 pb-3.5">
+              <div className="space-y-3.5 border-b border-b-border pb-3.5">
                 <div className="flex w-full items-center justify-start gap-2">
-                  <CustomIcon Icon={History} className="text-foreground/60" />
-                  <p className="min-w-20 text-foreground/60 lg:min-w-24">
+                  <CustomIcon Icon={History} className="text-text-tertiary" />
+                  <p className="min-w-20 text-text-tertiary lg:min-w-24">
                     Last edited
                   </p>
-                  <p className="underline">
+                  <p className="text-text-primary underline">
                     {formatDate(data!.data.note.updateAt)}
                   </p>
                 </div>
 
                 <div className="flex w-full items-center justify-start gap-2">
-                  <CustomIcon Icon={Tag} className="text-foreground/60" />
-                  <p className="min-w-20 text-foreground/60 lg:min-w-24">
+                  <CustomIcon Icon={Tag} className="text-text-tertiary" />
+                  <p className="min-w-20 text-text-tertiary lg:min-w-24">
                     Tags
                   </p>
-                  <p>{data!.data.note.tags.join(", ")}</p>
+                  <p className="text-text-primary">
+                    {data!.data.note.tags.join(", ")}
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-start gap-2 pt-3.5">
-                <CustomIcon Icon={Folder} className="text-foreground/60" />
-                <p className="min-w-20 text-foreground/60 lg:min-w-24">
+                <CustomIcon Icon={Folder} className="text-text-tertiary" />
+                <p className="min-w-20 text-text-tertiary lg:min-w-24">
                   Folder
                 </p>
 

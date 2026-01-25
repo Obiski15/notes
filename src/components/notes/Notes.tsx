@@ -92,8 +92,10 @@ function Notes() {
             <div
               key={note._id}
               className={cn(
-                "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left hover:scale-105",
-                noteId === note._id ? "bg-foreground/10" : "bg-[#FFFFFF08]"
+                "w-full cursor-pointer space-y-2.5 rounded-sm p-5 text-left transition-all duration-200",
+                noteId === note._id
+                  ? "bg-state-active shadow-sm"
+                  : "bg-surface hover:bg-state-hover active:bg-state-active"
               )}
               onClick={async () => {
                 if (status === "trash") return toastTrash()
@@ -118,13 +120,13 @@ function Notes() {
                   <Badge
                     key={`tag-${tag}-${index}}`}
                     variant="outline"
-                    className="capitalize"
+                    className="capitalize text-text-secondary"
                   >
                     {tag}
                   </Badge>
                 ))}
               </div>
-              <p className="text-foreground/40">{formatDate(note.updateAt)}</p>
+              <p className="text-text-tertiary">{formatDate(note.updateAt)}</p>
             </div>
           ))}
         </div>

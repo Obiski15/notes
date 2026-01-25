@@ -12,12 +12,20 @@ function Logo() {
   return (
     <Link
       href="/"
-      className="flex h-[38px] w-[101px] items-start justify-start gap-2.5 bg-transparent"
+      className="flex h-[38px] items-center justify-start gap-2 rounded-md transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+      aria-label="Go to home page"
     >
-      <p className={`${KaushaScript.className} text-[26px] font-normal`}>
+      <p
+        className={`${KaushaScript.className} text-[26px] font-normal text-text-primary`}
+      >
         Notes
       </p>
-      <Image src="/icons/icon.svg" alt="logo" width={15} height={15} />
+      <Image
+        src="/icons/icon.svg"
+        alt="Notes app icon"
+        width={15}
+        height={15}
+      />
     </Link>
   )
 }

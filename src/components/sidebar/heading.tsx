@@ -11,7 +11,7 @@ function Heading({
 }) {
   return (
     <CompWrapper className="flex items-center justify-between">
-      <h3 className="text-sm font-semibold capitalize text-foreground/60">
+      <h3 className="text-sm font-semibold capitalize text-text-secondary">
         {heading}
       </h3>
       {children}

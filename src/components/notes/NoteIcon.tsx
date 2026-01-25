@@ -26,21 +26,28 @@ function NoteIcon({ note }: { note: INote["data"]["note"] }) {
 
   return (
     <button
-      className="flex-shrink-0"
+      className="flex-shrink-0 rounded-md p-1 transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active disabled:cursor-not-allowed disabled:opacity-50"
       disabled={isUpdating}
       onClick={e =>
         handleButtonAction(e, { title: note.title, status: note.status })
       }
+      aria-label={`Restore from ${note.status}`}
     >
       {note.status === "trash" ? (
-        <CustomIcon Icon={History} />
+        <CustomIcon
+          Icon={History}
+          className="text-text-tertiary transition-colors hover:text-text-primary"
+        />
       ) : note.status === "archive" ? (
-        <CustomIcon Icon={ArchiveRestore} />
+        <CustomIcon
+          Icon={ArchiveRestore}
+          className="text-text-tertiary transition-colors hover:text-text-primary"
+        />
       ) : note.status === "favorites" ? (
         <CustomIcon
           Icon={Star}
           className="text-primary"
-          fill="hsl(var(--primary))"
+          fill="hsl(var(--color-primary))"
         />
       ) : (
         ""

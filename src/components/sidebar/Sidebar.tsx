@@ -8,7 +8,10 @@ import Recents from "./Recents"
 
 function Sidebar() {
   return (
-    <div className="no_scrollbar h-screen space-y-7 overflow-y-scroll py-7">
+    <aside
+      className="no_scrollbar h-screen space-y-6 overflow-y-scroll border-r border-border bg-surface py-6"
+      aria-label="Main navigation"
+    >
       <CompWrapper className="max-lg:hidden">
         <Logo />
       </CompWrapper>
@@ -19,12 +22,12 @@ function Sidebar() {
         <CreateNote />
       </div>
 
-      <div className="space-y-7">
+      <div className="space-y-6">
         <Recents />
         <Folders />
         <More />
       </div>
-    </div>
+    </aside>
   )
 }
 

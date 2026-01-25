@@ -17,11 +17,11 @@ const ErrorState = ({
   return (
     <div className="flex h-full items-center justify-center">
       <div className="space-y-2.5 rounded-lg p-6 text-center shadow-sm">
-        <CustomIcon Icon={Info} className="mx-auto size-12 text-destructive" />
+        <CustomIcon Icon={Info} className="mx-auto size-12 text-error" />
 
         <div className="space-y-2">
-          <h2 className="text-lg font-semibold text-destructive">{title}</h2>
-          <p className="mt-1 text-sm text-destructive/90">{message}</p>
+          <h2 className="text-lg font-semibold text-error">{title}</h2>
+          <p className="mt-1 text-sm text-error-dark">{message}</p>
         </div>
 
         {onRetry && (

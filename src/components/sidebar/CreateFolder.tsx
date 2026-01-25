@@ -49,8 +49,16 @@ function CreateFolder() {
       <form onSubmit={form.handleSubmit(_onSubmit)}>
         <button ref={submitButton} hidden></button>
         <Form {...form}>
-          <DialogTrigger>
-            <CustomIcon Icon={FolderPlus} className="text-foreground/40" />
+          <DialogTrigger asChild>
+            <button
+              className="rounded transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
+              aria-label="Create new folder"
+            >
+              <CustomIcon
+                Icon={FolderPlus}
+                className="text-text-tertiary transition-colors hover:text-primary"
+              />
+            </button>
           </DialogTrigger>
 
           <DialogContent className="sm:max-w-[425px]">

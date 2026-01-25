@@ -41,15 +41,23 @@ function Folders() {
               setFolder({ _id, name })
             }}
             className={cn(
-              `flex w-full items-center justify-start gap-3.5 px-5 py-2.5`,
-              _id === folder._id ? "bg-[#FFFFFF08]" : "bg-transparent"
+              `focus-ring flex w-full items-center justify-start gap-3 rounded-md px-5 py-2.5 transition-all duration-200`,
+              _id === folder._id
+                ? "bg-state-active"
+                : "bg-transparent hover:bg-state-hover active:bg-state-active"
             )}
+            aria-label={`Open folder: ${name}`}
+            aria-pressed={_id === folder._id}
           >
-            <CustomIcon Icon={_id === folder._id ? FolderOpen : Folder} />
+            <CustomIcon
+              Icon={_id === folder._id ? FolderOpen : Folder}
+              className={cn(
+                "transition-colors duration-200",
+                _id === folder._id ? "text-primary" : "text-text-tertiary"
+              )}
+            />
 
-            <p className="font-semibold capitalize text-foreground/60">
-              {name}
-            </p>
+            <p className="font-medium capitalize text-text-secondary">{name}</p>
           </button>
         ))
       )}

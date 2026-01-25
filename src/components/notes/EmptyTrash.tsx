@@ -1,5 +1,5 @@
 import NoteService from "@/services/note.service"
-import { IError } from "@/services/serviceTypes"
+import { IError } from "@/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 

@@ -1,4 +1,4 @@
-import { IError, INote, INoteStatus } from "@/services/serviceTypes"
+import { IError, INote, NOTESTATUS } from "@/types"
 import { ArchiveRestore, History, Star } from "lucide-react"
 import { toast } from "sonner"
 
@@ -11,11 +11,11 @@ function NoteIcon({ note }: { note: INote["data"]["note"] }) {
 
   const handleButtonAction = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    { title, status }: { title: string; status: INoteStatus }
+    { title, status }: { title: string; status: NOTESTATUS }
   ) => {
     e.stopPropagation()
     update(
-      { status: "active" },
+      { status: NOTESTATUS.ACTIVE },
       {
         onSuccess: () => toast.info(`${title} removed from ${status}`),
         onError: error =>
@@ -33,17 +33,17 @@ function NoteIcon({ note }: { note: INote["data"]["note"] }) {
       }
       aria-label={`Restore from ${note.status}`}
     >
-      {note.status === "trash" ? (
+      {note.status === NOTESTATUS.TRASH ? (
         <CustomIcon
           Icon={History}
           className="text-text-tertiary transition-colors hover:text-text-primary"
         />
-      ) : note.status === "archive" ? (
+      ) : note.status === NOTESTATUS.ARCHIVED ? (
         <CustomIcon
           Icon={ArchiveRestore}
           className="text-text-tertiary transition-colors hover:text-text-primary"
         />
-      ) : note.status === "favorites" ? (
+      ) : note.status === NOTESTATUS.FAVORITES ? (
         <CustomIcon
           Icon={Star}
           className="text-primary"

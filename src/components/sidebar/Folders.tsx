@@ -1,6 +1,6 @@
 "use client"
 
-import { IError } from "@/services/serviceTypes"
+import { IError } from "@/types"
 import { Folder, FolderOpen } from "lucide-react"
 
 import { cn } from "@/lib/utils"

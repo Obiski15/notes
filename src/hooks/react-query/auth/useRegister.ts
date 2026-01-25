@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation"
 import AuthService from "@/services/auth.service"
-import { IError, IRegister } from "@/services/serviceTypes"
+import { IError, IRegister } from "@/types"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { useSearchParams } from "next/navigation"
-import { IError } from "@/services/serviceTypes"
+import { IError, NOTESTATUS } from "@/types"
 import { Archive, Clipboard, Star, Trash } from "lucide-react"
 
 import { cn, formatDate, toastTrash } from "@/lib/utils"
@@ -80,7 +80,7 @@ function Notes() {
         <Info {...emptyState[status]} />
       ) : (
         <div className="h-full space-y-5 px-5 py-7">
-          {status === "trash" && !!data?.data.notes.length && (
+          {status === NOTESTATUS.TRASH && !!data?.data.notes.length && (
             <EmptyTrash notes={data.data.notes.map(note => note._id)} />
           )}
 
@@ -98,7 +98,7 @@ function Notes() {
                   : "bg-surface hover:bg-state-hover active:bg-state-active"
               )}
               onClick={async () => {
-                if (status === "trash") return toastTrash()
+                if (status === NOTESTATUS.TRASH) return toastTrash()
                 addRecentNote({
                   id: String(user?.data.user._id),
                   note: { title: String(note.title), _id: String(note._id) },

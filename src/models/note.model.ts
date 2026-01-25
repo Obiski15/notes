@@ -1,3 +1,4 @@
+import { NOTESTATUS } from "@/types"
 import mongoose from "mongoose"
 
 import { INoteDocument } from "@/lib/api/types"
@@ -43,10 +44,10 @@ const noteSchema = new mongoose.Schema<INoteDocument>(
       },
     },
     status: {
-      default: "active",
+      default: NOTESTATUS.ACTIVE,
       type: String,
       enum: {
-        values: ["active", "trash", "archive", "favorite"],
+        values: [...Object.values(NOTESTATUS)],
         message: "Note status can either be active, trash, archive or favorite",
       },
     },

@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { IError } from "@/services/serviceTypes"
+import { IError } from "@/types"
 
 import { useUser } from "@/hooks/react-query/user/useUser"
 

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
-import { IError } from "@/services/serviceTypes"
+import { IError, NOTESTATUS } from "@/types"
 import { Folder, History, Info as InfoIcon, Tag } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
@@ -111,7 +111,7 @@ function Editor() {
                     <SelectTrigger
                       id="folder"
                       className="size-fit border-none p-0 capitalize underline focus:ring-0 [&>svg]:hidden"
-                      disabled={data.data.note.status === "trash"}
+                      disabled={data.data.note.status === NOTESTATUS.TRASH}
                     >
                       <SelectValue placeholder="Select a folder" />
                     </SelectTrigger>

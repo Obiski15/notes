@@ -1,4 +1,3 @@
-import BaseService from "./base.service"
 import {
   IAuth,
   IForgotPassword,
@@ -6,7 +5,8 @@ import {
   IRegister,
   IResetPassword,
   IResponse,
-} from "./serviceTypes"
+} from "../types"
+import BaseService from "./base.service"
 
 export default class AuthService extends BaseService {
   constructor() {

@@ -1,5 +1,5 @@
 import FolderService from "@/services/folder.service"
-import { ICreateFolder, IError } from "@/services/serviceTypes"
+import { ICreateFolder, IError } from "@/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 

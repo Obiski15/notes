@@ -1,3 +1,4 @@
+import { NOTESTATUS } from "@/types"
 import mongoose from "mongoose"
 
 export interface IError extends Error {
@@ -26,7 +27,7 @@ export interface INoteDocument {
   content: mongoose.Schema.Types.Mixed
   title: string
   tags: string[]
-  status: "active" | "trash" | "archive" | "favorite"
+  status: NOTESTATUS
   created_at: Date
   updated_at: Date
 }

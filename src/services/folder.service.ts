@@ -1,5 +1,5 @@
+import { ICreateFolder, IFolder, IFolders, IResponse } from "../types"
 import BaseService from "./base.service"
-import { ICreateFolder, IFolder, IFolders, IResponse } from "./serviceTypes"
 
 export default class FolderService extends BaseService {
   constructor() {

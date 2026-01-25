@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { INoteStatus } from "@/services/serviceTypes"
+import { NOTESTATUS } from "@/types"
 import { Archive, CircleEllipsis, Star, Trash } from "lucide-react"
 import { toast } from "sonner"
 
@@ -21,7 +21,7 @@ function NoteActions() {
     status,
   }: {
     title: string
-    status: INoteStatus
+    status: NOTESTATUS
   }) => {
     update(
       { status },
@@ -34,7 +34,7 @@ function NoteActions() {
 
   return (
     <Popover>
-      <PopoverTrigger disabled={note?.data.note.status === "trash"}>
+      <PopoverTrigger disabled={note?.data.note.status === NOTESTATUS.TRASH}>
         <CustomIcon Icon={CircleEllipsis} />
       </PopoverTrigger>
 
@@ -44,7 +44,7 @@ function NoteActions() {
           onClick={() =>
             handleNoteAction({
               title: note!.data.note.title,
-              status: "favorites",
+              status: NOTESTATUS.FAVORITES,
             })
           }
           className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active disabled:cursor-not-allowed disabled:opacity-60"
@@ -61,7 +61,7 @@ function NoteActions() {
               onClick={() =>
                 handleNoteAction({
                   title: note!.data.note.title,
-                  status: "archive",
+                  status: NOTESTATUS.ARCHIVED,
                 })
               }
               className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-text-primary transition-all duration-200 hover:bg-state-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus active:bg-state-active disabled:cursor-not-allowed disabled:opacity-60"
@@ -77,7 +77,7 @@ function NoteActions() {
               onClick={() =>
                 handleNoteAction({
                   title: note!.data.note.title,
-                  status: "trash",
+                  status: NOTESTATUS.TRASH,
                 })
               }
               className="flex w-full items-center justify-start gap-3 rounded-md px-2 py-1.5 text-error transition-all duration-200 hover:bg-error/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error active:bg-error/20 disabled:cursor-not-allowed disabled:opacity-60"

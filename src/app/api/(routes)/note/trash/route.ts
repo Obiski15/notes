@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server"
 import Note from "@/models/note.model"
+import { NOTESTATUS } from "@/types"
 
-import catchAsync from "../../../../../lib/api/helpers/catchAsync"
-import sendResponse from "../../../../../lib/api/helpers/sendResponse"
-import AppError from "../../../../../lib/api/utils/AppError"
+import catchAsync from "@/lib/api/helpers/catchAsync"
+import sendResponse from "@/lib/api/helpers/sendResponse"
+import AppError from "@/lib/api/utils/AppError"
 
 export const DELETE = catchAsync(async (request: NextRequest) => {
   const body = await request.json()
@@ -16,7 +17,7 @@ export const DELETE = catchAsync(async (request: NextRequest) => {
     $and: [
       { _id: { $in: notes } },
       { userId: { $eq: userId } },
-      { status: "trash" },
+      { status: NOTESTATUS.TRASH },
     ],
   })
 

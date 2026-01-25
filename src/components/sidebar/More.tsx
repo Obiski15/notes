@@ -1,7 +1,7 @@
 "use client"
 
 import { ForwardRefExoticComponent, RefAttributes } from "react"
-import { INoteStatus } from "@/services/serviceTypes"
+import { NOTESTATUS } from "@/types"
 import { Archive, LucideProps, Star, Trash } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -11,15 +11,15 @@ import CustomIcon from "../shared/CustomIcon"
 import Heading from "./heading"
 
 const content: {
-  status: INoteStatus
+  status: NOTESTATUS
   name: string
   Icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >
 }[] = [
-  { name: "favorites", status: "favorites", Icon: Star },
-  { name: "trash", status: "trash", Icon: Trash },
-  { name: "archived notes", status: "archive", Icon: Archive },
+  { name: "favorites", status: NOTESTATUS.FAVORITES, Icon: Star },
+  { name: "trash", status: NOTESTATUS.TRASH, Icon: Trash },
+  { name: "archived notes", status: NOTESTATUS.ARCHIVED, Icon: Archive },
 ]
 
 function More() {

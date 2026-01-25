@@ -1,5 +1,5 @@
+import { ICreateNote, INote, INotes, IUpdateNote } from "../types"
 import BaseService from "./base.service"
-import { ICreateNote, INote, INotes, IUpdateNote } from "./serviceTypes"
 
 export default class NoteService extends BaseService {
   constructor() {

@@ -1,5 +1,5 @@
+import { IUser } from "../types"
 import BaseService from "./base.service"
-import { IUser } from "./serviceTypes"
 
 export default class UserService extends BaseService {
   constructor() {

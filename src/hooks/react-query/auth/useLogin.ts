@@ -1,5 +1,5 @@
 import AuthService from "@/services/auth.service"
-import { IError, ILogin } from "@/services/serviceTypes"
+import { IError, ILogin } from "@/types"
 import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 

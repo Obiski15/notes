@@ -1,8 +1,9 @@
 import { NextRequest } from "next/server"
 import Note from "@/models/note.model"
+import { NOTESTATUS } from "@/types"
 
-import catchAsync from "../../../../lib/api/helpers/catchAsync"
-import sendResponse from "../../../../lib/api/helpers/sendResponse"
+import catchAsync from "@/lib/api/helpers/catchAsync"
+import sendResponse from "@/lib/api/helpers/sendResponse"
 
 export const GET = catchAsync(async (request: NextRequest) => {
   const userId = request.headers.get("x-userid")!
@@ -18,9 +19,12 @@ export const GET = catchAsync(async (request: NextRequest) => {
 
   const query = {
     ...filter,
-    ...(!noteStatus
+    ...(!noteStatus || noteStatus === NOTESTATUS.ACTIVE
       ? {
-          $or: [{ status: "active" }, { status: "favorites" }],
+          $or: [
+            { status: NOTESTATUS.ACTIVE },
+            { status: NOTESTATUS.FAVORITES },
+          ],
         }
       : { status: noteStatus }),
   }

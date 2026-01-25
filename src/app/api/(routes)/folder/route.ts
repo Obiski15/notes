@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server"
 import Folder from "@/models/folder.model"
 
-import catchAsync from "../../../../lib/api/helpers/catchAsync"
-import sendResponse from "../../../../lib/api/helpers/sendResponse"
-import AppError from "../../../../lib/api/utils/AppError"
+import catchAsync from "@/lib/api/helpers/catchAsync"
+import sendResponse from "@/lib/api/helpers/sendResponse"
+import AppError from "@/lib/api/utils/AppError"
 
 export const GET = catchAsync(async (request: NextRequest) => {
   const userId = request.headers.get("x-userid")

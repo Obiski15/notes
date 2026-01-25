@@ -1,12 +1,21 @@
+export enum NOTESTATUS {
+  ACTIVE = "active",
+  ARCHIVED = "archive",
+  TRASH = "trash",
+  FAVORITES = "favorites",
+}
+
 export interface IResponse {
   status: "success" | "error" | "fail"
 }
+
 export interface IError {
   error: {
     message: string
     status: number
   }
 }
+
 interface Folder {
   _id: string
   name: string
@@ -14,7 +23,7 @@ interface Folder {
 
 interface Note {
   _id: string
-  status: INoteStatus
+  status: NOTESTATUS
   title: string
   content: unknown
   tags: string[]
@@ -41,9 +50,6 @@ export interface IFolders extends IResponse {
 export interface ICreateFolder {
   folder: string
 }
-
-// notes
-export type INoteStatus = "active" | "archive" | "favorites" | "trash"
 
 export interface INote extends IResponse {
   data: {

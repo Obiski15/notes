@@ -31,7 +31,7 @@ import "@/components/tiptap-ui/code-block/code-block-theme.css"
 
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
-import { IError } from "@/services/serviceTypes"
+import { IError, NOTESTATUS } from "@/types"
 import { Ellipsis } from "lucide-react"
 
 import { cn, toastTrash } from "@/lib/utils"
@@ -107,12 +107,12 @@ function TextEditor({ folder }: { folder?: string }) {
     content: data?.data.note.content ?? null,
     autofocus: true,
     shouldRerenderOnTransaction: false,
-    editable: !isUpdating && !(data?.data.note.status === "trash"),
+    editable: !isUpdating && !(data?.data.note.status === NOTESTATUS.TRASH),
     immediatelyRender: false,
   })
 
   useEffect(() => {
-    if (data?.data.note.status === "trash") {
+    if (data?.data.note.status === NOTESTATUS.TRASH) {
       toastTrash()
     }
   })
@@ -124,7 +124,7 @@ function TextEditor({ folder }: { folder?: string }) {
       <div
         className={cn(
           "flex items-center justify-start gap-3.5 py-2.5 lg:gap-7",
-          !(data?.data.note.status === "trash") &&
+          !(data?.data.note.status === NOTESTATUS.TRASH) &&
             "border-b border-t border-foreground/10"
         )}
       >
@@ -156,7 +156,7 @@ function TextEditor({ folder }: { folder?: string }) {
       </div>
 
       <EditorContent editor={editor} role="presentation" />
-      {!(data?.data.note.status === "trash") && (
+      {!(data?.data.note.status === NOTESTATUS.TRASH) && (
         <Button
           disabled={isUpdating}
           onClick={() => {

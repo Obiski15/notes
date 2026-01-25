@@ -1,5 +1,5 @@
 import NoteService from "@/services/note.service"
-import { IUpdateNote } from "@/services/serviceTypes"
+import { IUpdateNote } from "@/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export const useUpdateNote = (id: string) => {

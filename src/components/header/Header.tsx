@@ -1,6 +1,7 @@
 "use client"
 
 import { Ref } from "react"
+import { NOTESTATUS } from "@/types"
 import { Menu } from "lucide-react"
 
 import { useMediaQuery } from "@/hooks/useMediaQuery"
@@ -52,7 +53,8 @@ function Header({ ref }: { ref?: Ref<HTMLDivElement> }) {
       </div>
 
       <p className="text-2xl font-semibold capitalize max-lg:hidden">
-        {folder.name || (!(status === "active") ? status : "All Notes")}
+        {folder.name ||
+          (!(status === NOTESTATUS.ACTIVE) ? status : "All Notes")}
       </p>
 
       <div className="flex items-center justify-between gap-3 max-lg:hidden">

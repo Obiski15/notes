@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server"
 import Note from "@/models/note.model"
 
-import catchAsync from "../../../../../lib/api/helpers/catchAsync"
-import sendResponse from "../../../../../lib/api/helpers/sendResponse"
+import catchAsync from "@/lib/api/helpers/catchAsync"
+import sendResponse from "@/lib/api/helpers/sendResponse"
 
 export const GET = catchAsync(
   async (request: NextRequest, context?: { params: Promise<unknown> }) => {

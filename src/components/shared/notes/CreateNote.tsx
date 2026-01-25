@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { IError } from "@/services/serviceTypes"
+import { IError } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
 import { Plus } from "lucide-react"

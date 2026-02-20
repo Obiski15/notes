@@ -4,6 +4,7 @@ import { Source_Sans_3 } from "next/font/google"
 import "./globals.css"
 
 import { Toaster } from "@/components/ui/sonner"
+import KeyboardShortcutProvider from "@/providers/KeyboardShortcutProvider"
 import ReactQueryProvider from "@/providers/ReactQueryProvider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
@@ -30,15 +31,17 @@ export default function RootLayout({
       <body
         className={`${sourceSans.variable} mx-auto min-w-[250px] max-w-[1440px] overflow-hidden antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ReactQueryProvider>{children}</ReactQueryProvider>
-          <Toaster position="top-center" />
-        </ThemeProvider>
+        <KeyboardShortcutProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+            <Toaster position="top-center" />
+          </ThemeProvider>
+        </KeyboardShortcutProvider>
       </body>
     </html>
   )

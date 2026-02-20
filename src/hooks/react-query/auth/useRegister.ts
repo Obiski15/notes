@@ -15,7 +15,6 @@ export const useRegister = () => {
     mutationFn: async (data: IRegister) =>
       await new AuthService().register(data),
     onSuccess: () => {
-      toast.success("Account created successfully")
       toast.info("Redirecting...")
       router.push("/")
     },

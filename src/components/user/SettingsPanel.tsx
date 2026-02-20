@@ -82,8 +82,9 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
                 </Label>
                 <Input
                   id="name"
-                  defaultValue={"username"}
+                  defaultValue={user?.data.user?.name || "username"}
                   placeholder="Your name"
+                  disabled
                 />
               </div>
 
@@ -94,7 +95,7 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
                 <Input
                   id="email"
                   type="email"
-                  defaultValue={user?.data.user.email || ""}
+                  defaultValue={user?.data.user?.email || ""}
                   placeholder="your.email@example.com"
                   disabled
                   className="disabled:text-text-secondary disabled:opacity-100"

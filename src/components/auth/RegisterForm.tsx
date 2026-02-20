@@ -33,6 +33,7 @@ function RegisterForm() {
       onSuccess: () => {
         form.reset({
           email: "",
+          name: "",
           password: "",
           confirm_password: "",
         })
@@ -53,6 +54,24 @@ function RegisterForm() {
                 <Input
                   placeholder="Enter email address"
                   type="email"
+                  disabled={isLoading}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage>{fieldState.error?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="name"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter your name"
+                  type="text"
                   disabled={isLoading}
                   {...field}
                 />

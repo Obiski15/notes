@@ -16,6 +16,10 @@ export const loginSchema = forgotPasswordSchema.extend({
 
 export const registerSchema = loginSchema
   .extend({
+    name: string({ required_error: "Name is required" }).min(
+      2,
+      "Name must be at least 2 characters long"
+    ),
     confirm_password: string({
       required_error: "Confirm Password is required",
     }).min(8, "Password must be 8 or more characters long"),

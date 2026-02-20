@@ -10,11 +10,14 @@ export const POST = catchAsync(async (request: NextRequest) => {
   const confirm_password = body.confirm_password
   const password = body.password
   const email = body.email
+  const name = body.name
 
   if (!email || !password || !confirm_password)
     throw new AppError("Missing email or password", 400)
 
-  const user = await User.create({ email, password, confirm_password })
+  if (!name) throw new AppError("Missing user name", 400)
+
+  const user = await User.create({ email, password, name, confirm_password })
 
   user.password = undefined
 

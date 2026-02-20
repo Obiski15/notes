@@ -41,6 +41,7 @@ export interface IUserDocument {
   passwordUpdatedAt?: string
   googleId?: string
   email: string
+  name: string
   created_at: Date
   updated_at: Date
 

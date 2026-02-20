@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema<IUserDocument>(
       type: String,
       select: false,
     },
+    name: {
+      type: String,
+      trim: true,
+      required: [true, "Name is required"],
+    },
     confirm_password: {
       type: String,
       select: false,

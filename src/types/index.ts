@@ -80,6 +80,7 @@ export type IRecentNotes = IRecentNote[]
 export interface IUser extends IResponse {
   data: {
     user: {
+      name: string
       email: string
       _id: string
     }
@@ -110,4 +111,5 @@ export interface ILogin extends IForgotPassword {
 
 export interface IRegister extends ILogin {
   confirm_password: string
+  name: string
 }

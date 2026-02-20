@@ -1,7 +1,13 @@
+"use client"
+
+import { useKeyboardShortcutContext } from "@/hooks/useKeyboardShortcutContext"
+
 import { Input } from "../../ui/input"
 
 function SearchNote() {
-  return <Input placeholder="Search by Tags or Title..." />
+  const { searchRef } = useKeyboardShortcutContext()
+
+  return <Input ref={searchRef} placeholder="Search by Tags or Title..." />
 }
 
 export default SearchNote

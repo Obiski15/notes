@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 
 import { useUser } from "@/hooks/react-query/user/useUser"
+import { useKeyboardShortcutContext } from "@/hooks/useKeyboardShortcutContext"
 
 import Logout from "../auth/Logout"
 import CustomIcon from "../shared/CustomIcon"
@@ -31,15 +32,17 @@ import {
 import { Switch } from "../ui/switch"
 
 function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
+  const [notifications, setNotifications] = useState(true)
+  const { settingRef } = useKeyboardShortcutContext()
+  const [autoSave, setAutoSave] = useState(true)
   const { theme, setTheme } = useTheme()
   const { user } = useUser()
-  const [notifications, setNotifications] = useState(true)
-  const [autoSave, setAutoSave] = useState(true)
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <button
+          ref={settingRef}
           className={`flex items-center justify-start gap-3 rounded-md transition-all duration-200 ${
             showLabel
               ? "w-full px-5 py-2.5 hover:bg-state-hover active:bg-state-active"
@@ -270,7 +273,7 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-text-secondary">Search</span>
                 <Badge variant="outline" className="font-mono text-xs">
-                  Ctrl + K
+                  Alt + K
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
@@ -278,7 +281,7 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
                   Toggle Sidebar
                 </span>
                 <Badge variant="outline" className="font-mono text-xs">
-                  Ctrl + B
+                  Alt + B
                 </Badge>
               </div>
             </div>

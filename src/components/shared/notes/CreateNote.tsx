@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { IError } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
@@ -15,6 +15,7 @@ import { useFolders } from "@/hooks/react-query/folder/useFolders"
 import { useCreateNote } from "@/hooks/react-query/notes/useCreateNote"
 import { useUpdateRecentNotes } from "@/hooks/react-query/notes/useUpdateRecentNotes"
 import { useUser } from "@/hooks/react-query/user/useUser"
+import { useKeyboardShortcutContext } from "@/hooks/useKeyboardShortcutContext"
 
 import { Button } from "../../ui/button"
 import {
@@ -56,24 +57,9 @@ function CreateNote() {
   })
   const submitButton = useRef<HTMLButtonElement | null>(null)
   const cancelButton = useRef<HTMLButtonElement | null>(null)
+  const { createNoteRef } = useKeyboardShortcutContext()
   const { addRecentNote } = useUpdateRecentNotes()
   const { user } = useUser()
-  const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey && event.key.toLowerCase() === "n") {
-        event.preventDefault()
-        dialogTriggerRef.current?.click()
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [dialogTriggerRef.current])
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
     const data = {
@@ -110,7 +96,7 @@ function CreateNote() {
                 Icon={Plus}
                 IconPosition="left"
                 disabled={!!isFetchingNotes}
-                ref={dialogTriggerRef}
+                ref={createNoteRef}
               >
                 New note
               </Button>

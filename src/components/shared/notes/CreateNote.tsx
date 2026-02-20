@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { IError } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useIsFetching } from "@tanstack/react-query"
@@ -58,6 +58,22 @@ function CreateNote() {
   const cancelButton = useRef<HTMLButtonElement | null>(null)
   const { addRecentNote } = useUpdateRecentNotes()
   const { user } = useUser()
+  const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.altKey && event.key.toLowerCase() === "n") {
+        event.preventDefault()
+        dialogTriggerRef.current?.click()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [dialogTriggerRef.current])
 
   const _onSubmit: SubmitHandler<z.infer<typeof schema>> = values => {
     const data = {
@@ -94,6 +110,7 @@ function CreateNote() {
                 Icon={Plus}
                 IconPosition="left"
                 disabled={!!isFetchingNotes}
+                ref={dialogTriggerRef}
               >
                 New note
               </Button>

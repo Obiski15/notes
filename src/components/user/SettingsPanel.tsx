@@ -264,7 +264,7 @@ function SettingsPanel({ showLabel = false }: { showLabel?: boolean }) {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-text-secondary">New Note</span>
                 <Badge variant="outline" className="font-mono text-xs">
-                  Ctrl + N
+                  Alt + N
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
